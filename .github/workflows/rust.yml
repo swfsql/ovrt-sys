@@ -35,6 +35,12 @@ jobs:
         path: target/debug
         key: windows-latest-stable-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
 
+    - name: Cache cargo doc
+      uses: actions/cache@v1
+      with:
+        path: target/doc
+        key: windows-latest-stable-cargo-doc-${{ hashFiles('**/Cargo.toml') }}
+
     - name: Fmt Check
       uses: actions-rs/cargo@v1
       with:
@@ -47,48 +53,35 @@ jobs:
         command: clippy
         args: -- -D warnings
 
-    - name: Build
+    - name: Debug build
       uses: actions-rs/cargo@v1
       with:
           command: build
           args: --verbose
 
-    - name: Tests Check
+    - name: Debug tests check
       uses: actions-rs/cargo@v1
       with:
           command: test
           args: --verbose
 
-    - name: Wasm Check
+    - name: Debug wasm check
       uses: actions-rs/cargo@v1
       with:
         command: check
         target: wasm32-unknown-unknown
         override: true
 
-  release:
-          name: GitHub Pages
-          runs-on: windows-latest
+    - name: Doc build
+      uses: actions-rs/cargo@v1
+      with:
+        command: doc
+        args: --all --no-deps
 
-          steps:
-          - uses: actions/checkout@v2
-
-          - name: Cache cargo doc
-            uses: actions/cache@v1
-            with:
-              path: target/doc
-              key: windows-latest-stable-cargo-doc-${{ hashFiles('**/Cargo.toml') }}
-
-          - name: Build Documentation
-            uses: actions-rs/cargo@v1
-            with:
-              command: doc
-              args: --all --no-deps
-          
-          - name: Deploy Documentation
-            uses: peaceiris/actions-gh-pages@v3
-            with:
-              personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}
-              publish_branch: gh-pages
-              publish_dir: ./target/doc
-              keep_files: true
+    - name: Doc deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./target/doc
+        keep_files: true
