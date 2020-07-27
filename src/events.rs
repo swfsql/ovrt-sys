@@ -9,26 +9,47 @@ extern "C" {
 
     /// Sends HMD and left/right controller position and rotation, also shows the active controller.
     /// (Needs to be enabled per overlay, refer to API above).
-    pub fn DevicePositionUpdate(deviceInfo: types::OVRDeviceUpdate);
+    #[wasm_bindgen(js_name = DevicePositionUpdate)]
+    // TODO: check accordingly to reference.
+    // reference: function DevicePositionUpdate(deviceInfo) {
+    pub fn device_position_update(deviceInfo: types::OVRDeviceUpdate);
 
     /// Receives messages from other browser instances.
-    pub fn ReceiveMessage(message: String);
+    #[wasm_bindgen(js_name = ReceiveMessage)]
+    // TODO: check accordingly to reference.
+    // reference: function ReceiveMessage(message) {
+    pub fn receive_message(message: String);
 
     /// If the user is interacting with the current overlay.
     /// (Mouse over).
-    pub fn InteractionStateChanged(isInteracting: bool);
+    #[wasm_bindgen(js_name = InteractionStateChanged)]
+    // TODO: check accordingly to reference.
+    // reference: function InteractionStateChanged(isInteracting) {
+    pub fn interaction_state_changed(isInteracting: bool);
 
     /// Called when an overlay is spawned.
-    pub fn OverlayOpened(uid: i32);
+    #[wasm_bindgen(js_name = OverlayOpened)]
+    // TODO: check accordingly to reference.
+    // reference: function OverlayOpened(uid) {
+    pub fn overlay_opened(uid: i32);
 
     /// Called when an overlay is closed.
-    pub fn OverlayClosed(uid: i32);
+    #[wasm_bindgen(js_name = OverlayClosed)]
+    // TODO: check accordingly to reference.
+    // reference: function OverlayClosed(uid) {
+    pub fn overlay_closed(uid: i32);
 
     /// Called when an overlay is moved or its size changes.
     /// (Needs to be enabled per overlay, refer to API above).
-    pub fn OverlayTransformChanged(uid: i32, data: types::OVRTransformUpdate);
+    #[wasm_bindgen(js_name = OverlayTransformChanged)]
+    // TODO: check accordingly to reference.
+    // reference: function OverlayTransformChanged(updateData) {
+    pub fn overlay_transform_changed(uid: i32, data: types::OVRTransformUpdate);
 
     /// Called when the API has finished injecting into the browser and the API can now be used.
-    pub fn APIInit();
+    #[wasm_bindgen(js_name = APIInit)]
+    // TODO: check accordingly to reference.
+    // reference: none
+    pub fn api_init();
 
 }

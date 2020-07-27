@@ -4,21 +4,27 @@ use super::wasm_bindgen;
 
 /// OVROverlayTransform.
 #[wasm_bindgen]
-#[allow(non_snake_case)]
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+// TODO: try renaming into OvrOverlayTransform
 pub struct OVROverlayTransform {
     ///	X position of window.
-    pub posX: f64,
+    #[wasm_bindgen(js_name = posX)]
+    pub pos_x: f64,
     ///	Y position of window.
-    pub posY: f64,
+    #[wasm_bindgen(js_name = posY)]
+    pub pos_y: f64,
     ///	Z position of window.
-    pub posZ: f64,
+    #[wasm_bindgen(js_name = posZ)]
+    pub pos_z: f64,
     ///	X rotation of window (EulerAngles).
-    pub rotX: f64,
+    #[wasm_bindgen(js_name = rotX)]
+    pub rot_x: f64,
     ///	Y rotation of window (EulerAngles).
-    pub rotY: f64,
+    #[wasm_bindgen(js_name = rotY)]
+    pub rot_y: f64,
     ///	Z rotation of window (EulerAngles).
-    pub rotZ: f64,
+    #[wasm_bindgen(js_name = rotZ)]
+    pub rot_z: f64,
     ///	Size of window (In meters).
     pub size: f64,
     ///	Opacity of window.
@@ -28,19 +34,23 @@ pub struct OVROverlayTransform {
     ///	Framerate of window.
     pub framerate: i32,
     ///	Eco mode enabled or disabled.
-    pub ecoMode: bool,
+    #[wasm_bindgen(js_name = ecoMode)]
+    pub eco_mode: bool,
     ///	Look hiding enabled or disabled.
-    pub lookHiding: bool,
+    #[wasm_bindgen(js_name = lookHiding)]
+    pub look_hiding: bool,
     ///	Device window is attached to.
-    pub attachedDevice: i32,
+    #[wasm_bindgen(js_name = attachedDevice)]
+    pub attached_device: i32,
     ///	If overlay should save and automatically re-open next program start.
-    pub shouldSave: bool,
+    #[wasm_bindgen(js_name = shouldSave)]
+    pub should_save: bool,
 }
 
 /// OVRWebContents.
 #[wasm_bindgen]
-#[allow(non_snake_case)]
 #[derive(Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+// TODO: try renaming into OvrWebContents
 pub struct OVRWebContents {
     ///	URL of web page to display.
     url: String,
@@ -65,21 +75,27 @@ impl OVRWebContents {
 ///
 /// Refer to Unity documentation for 'Bounds'.
 #[wasm_bindgen]
-#[allow(non_snake_case)]
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+// TODO: try renaming into OvrOverlayBounds
 pub struct OVROverlayBounds {
     ///	Vector3 Center - X.
-    pub centerX: f64,
+    #[wasm_bindgen(js_name = centerX)]
+    pub center_x: f64,
     ///	Vector3 Center - Y.
-    pub centerY: f64,
+    #[wasm_bindgen(js_name = centerY)]
+    pub center_y: f64,
     ///	Vector3 Center - Z.
-    pub centerZ: f64,
+    #[wasm_bindgen(js_name = centerZ)]
+    pub center_z: f64,
     ///	Vector3 Extents - X.
-    pub extentsX: f64,
+    #[wasm_bindgen(js_name = extentsX)]
+    pub extents_x: f64,
     ///	Vector3 Extents - Y.
-    pub extentsY: f64,
+    #[wasm_bindgen(js_name = extentsY)]
+    pub extents_y: f64,
     ///	Vector3 Extents - Z.
-    pub extentsZ: f64,
+    #[wasm_bindgen(js_name = extentsZ)]
+    pub extents_z: f64,
 }
 
 /// OVRFingerCurls.
@@ -87,6 +103,7 @@ pub struct OVROverlayBounds {
 /// 0 to 1.
 #[wasm_bindgen]
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+// TODO: try renaming into OvrFingerCurls
 pub struct OVRFingerCurls {
     ///	Thumb curl.
     pub thumb: f64,
@@ -102,52 +119,69 @@ pub struct OVRFingerCurls {
 
 /// OVRDeviceUpdate.
 #[wasm_bindgen]
-#[allow(non_snake_case)]
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+// TODO: try renaming into OvrDeviceUpdate
 pub struct OVRDeviceUpdate {
     ///	If this is the active controller. (Always true for HMD).
     pub active: bool,
     ///	X position.
-    pub posX: f64,
+    #[wasm_bindgen(js_name = posX)]
+    pub pos_x: f64,
     ///	Y position.
-    pub posY: f64,
+    #[wasm_bindgen(js_name = posY)]
+    pub pos_y: f64,
     ///	Z position.
-    pub posZ: f64,
+    #[wasm_bindgen(js_name = posZ)]
+    pub pos_z: f64,
     ///	X rotation (EulerAngles).
-    pub rotX: f64,
+    #[wasm_bindgen(js_name = rotX)]
+    pub rot_x: f64,
     ///	Y rotation (EulerAngles).
-    pub rotY: f64,
+    #[wasm_bindgen(js_name = rotY)]
+    pub rot_y: f64,
     ///	Z rotation (EulerAngles).
-    pub rotZ: f64,
+    #[wasm_bindgen(js_name = rotZ)]
+    pub rot_z: f64,
     ///	If trigger bind is pressed.
-    pub triggerDown: bool,
+    #[wasm_bindgen(js_name = triggerDown)]
+    pub trigger_down: bool,
     ///	If window move bind is pressed.
-    pub windowMoveDown: bool,
+    #[wasm_bindgen(js_name = windowMoveDown)]
+    pub window_move_down: bool,
     ///	If edit mode bind is pressed.
-    pub editModeDown: bool,
+    #[wasm_bindgen(js_name = editModeDown)]
+    pub edit_mode_down: bool,
     ///	Trackpad X tocuh position. (Left/Right)
-    pub trackpadX: f64,
+    #[wasm_bindgen(js_name = trackpadX)]
+    pub trackpad_x: f64,
     ///	Trackpad Y touch position. (Up/Down)
-    pub trackpadY: f64,
+    #[wasm_bindgen(js_name = trackpadY)]
+    pub trackpad_y: f64,
 }
 
 /// OVRTransformUpdate.
 #[wasm_bindgen]
-#[allow(non_snake_case)]
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+// TODO: try renaming into OvrTransformUpdate
 pub struct OVRTransformUpdate {
     ///	X position.
-    pub posX: f64,
+    #[wasm_bindgen(js_name = posX)]
+    pub pos_x: f64,
     ///	Y position.
-    pub posY: f64,
+    #[wasm_bindgen(js_name = posY)]
+    pub pos_y: f64,
     ///	Z position.
-    pub posZ: f64,
+    #[wasm_bindgen(js_name = posZ)]
+    pub pos_z: f64,
     ///	X rotation (EulerAngles).
-    pub rotX: f64,
+    #[wasm_bindgen(js_name = rotX)]
+    pub rot_x: f64,
     ///	Y rotation (EulerAngles).
-    pub rotY: f64,
+    #[wasm_bindgen(js_name = rotY)]
+    pub rot_y: f64,
     ///	Z rotation (EulerAngles).
-    pub rotZ: f64,
+    #[wasm_bindgen(js_name = rotZ)]
+    pub rot_z: f64,
     ///	Overlay size.
     pub size: f64,
     ///	Overlay width in pixels.
@@ -158,6 +192,7 @@ pub struct OVRTransformUpdate {
 
 #[wasm_bindgen]
 #[derive(Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+// TODO: check this rename from KeyValuePair
 pub struct KeyValuePairI32String {
     pub name: Option<i32>,
     value: Option<String>,

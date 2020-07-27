@@ -4,6 +4,7 @@ use super::wasm_bindgen;
 #[wasm_bindgen]
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(i32)]
+// TODO: check this rename from Devices
 pub enum Device {
     /// None/World.
     World = 0,
@@ -21,6 +22,7 @@ impl Default for Device {
 #[wasm_bindgen]
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(i32)]
+// TODO: check this rename
 pub enum WindowType {
     WebPage = 0,
     DesktopCapture = 1,
@@ -30,6 +32,7 @@ pub enum WindowType {
 #[wasm_bindgen]
 #[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(i32)]
+// TODO: check this rename from Settings
 pub enum Setting {
     /// (Width in meters) (f64).
     Size = 0,
