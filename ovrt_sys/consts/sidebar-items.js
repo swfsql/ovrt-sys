@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Device",""],["Setting",""],["WindowType",""]]});

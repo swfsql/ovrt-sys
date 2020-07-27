@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["KeyValuePairI32String",""],["OVRDeviceUpdate","OVRDeviceUpdate."],["OVRFingerCurls","OVRFingerCurls."],["OVROverlayBounds","OVROverlayBounds."],["OVROverlayTransform","OVROverlayTransform."],["OVRTransformUpdate","OVRTransformUpdate."],["OVRWebContents","OVRWebContents."]]});
