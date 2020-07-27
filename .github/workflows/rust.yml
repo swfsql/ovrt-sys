@@ -16,16 +16,69 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Cache cargo registry
+      uses: actions/cache@v1
+      with:
+        path: ~/.cargo/registry
+        key: windows-latest-stable-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+
+    - name: Cache cargo index
+      uses: actions/cache@v1
+      with:
+        path: ~/.cargo/git
+        key: windows-latest-stable-cargo-index-${{ hashFiles('**/Cargo.toml') }}
+    
+    - name: Cache cargo debug build
+      uses: actions/cache@v1
+      with:
+        path: target/debug
+        key: windows-latest-stable-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
+
+    - name: Fmt Check
+      uses: actions-rs/cargo@v1
+      with:
+        command: fmt
+        args: --all -- --check
+
+    - name: Clippy warnings Check
+      uses: actions-rs/cargo@v1
+      with:
+        command: clippy
+        args: -- -D warnings
+
     - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      uses: actions-rs/cargo@v1
+      with:
+          command: build
+          args: --verbose
+
+    - name: Tests Check
+      uses: actions-rs/cargo@v1
+      with:
+          command: test
+          args: --verbose
+
+    - name: Wasm Check
+      uses: actions-rs/cargo@v1
+      with:
+        command: check
+        target: wasm32-unknown-unknown
+        override: true
+
   release:
           name: GitHub Pages
           runs-on: windows-latest
 
           steps:
           - uses: actions/checkout@v2
+
+          - name: Cache cargo doc
+            uses: actions/cache@v1
+            with:
+              path: target/doc
+              key: windows-latest-stable-cargo-doc-${{ hashFiles('**/Cargo.toml') }}
+
           - name: Build Documentation
             uses: actions-rs/cargo@v1
             with:
