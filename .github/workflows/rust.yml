@@ -20,3 +20,22 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+  release:
+          name: GitHub Pages
+          runs-on: windows-latest
+
+          steps:
+          - uses: actions/checkout@v2
+          - name: Build Documentation
+            uses: actions-rs/cargo@v1
+            with:
+              command: doc
+              args: --all --no-deps
+          
+          - name: Deploy Documentation
+            uses: peaceiris/actions-gh-pages@v3
+            with:
+              personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}
+              publish_branch: gh-pages
+              publish_dir: ./target/doc
+              keep_files: true
