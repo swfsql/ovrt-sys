@@ -1,6 +1,3 @@
-#![allow(incomplete_features)]
-#![feature(const_generics)]
-
 //! Bindings for ovr-toolkit custom apps js api.
 //!
 //! Based on [wiki/CustomApps](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps&oldid=390)

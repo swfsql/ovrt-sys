@@ -2,17 +2,7 @@
 //!
 //! Any API call that returns a value also had an additional string optional parameter, this can be used to share data back to the callback function.
 
-use super::{consts, types, wasm_bindgen};
-
-pub fn set_overlay_setting<const SETTING: consts::Setting>(uid: i32) {
-    let setting = 0;
-    let new_value = 0;
-
-    #[allow(unused_unsafe)]
-    unsafe {
-        set_overlay_setting_i32(uid, setting, new_value);
-    }
-}
+use super::{types, wasm_bindgen};
 
 #[wasm_bindgen]
 extern "C" {
