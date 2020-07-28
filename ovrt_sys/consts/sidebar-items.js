@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Device",""],["Setting",""],["WindowType",""]]});
+initSidebarItems({"enum":[["Device",""],["Setting","Represents kinds of setting values."],["WindowType","Represents kinds of window types."]]});
