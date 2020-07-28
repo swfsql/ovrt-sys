@@ -1,6 +1,11 @@
 //! Types.
 
+pub mod setting;
+pub mod window_type;
+
 use super::wasm_bindgen;
+pub use setting::SettingValue;
+pub use window_type::WindowTypeValue;
 
 /// OVROverlayTransform.
 #[wasm_bindgen]

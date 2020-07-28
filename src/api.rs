@@ -2,7 +2,17 @@
 //!
 //! Any API call that returns a value also had an additional string optional parameter, this can be used to share data back to the callback function.
 
-use super::{types, wasm_bindgen};
+use super::{consts, types, wasm_bindgen};
+
+pub fn set_overlay_setting<const SETTING: consts::Setting>(uid: i32) {
+    let setting = 0;
+    let new_value = 0;
+
+    #[allow(unused_unsafe)]
+    unsafe {
+        set_overlay_setting_i32(uid, setting, new_value);
+    }
+}
 
 #[wasm_bindgen]
 extern "C" {
@@ -16,15 +26,27 @@ extern "C" {
 
     /// Set contents of an overlay.
     ///
-    /// TODO: check what the following means:
-    ///
-    /// For website - `contents: OVRWebContents`.
-    /// For desktop - `monitorId: i32`.
-    /// For window - `windowHandle: i32`.
+    /// This is private/hidden for safety. See `types::WindowTypeValue` for more info.
     #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
     // TODO: check accordingly to reference.
     // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
-    pub fn set_contents(uid: i32, type_: i32);
+    pub(crate) fn set_contents_website(uid: i32, type_: i32, contents: types::OVRWebContents);
+
+    /// Set contents of an overlay.
+    ///
+    /// This is private/hidden for safety. See `types::WindowTypeValue` for more info.
+    #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
+    // TODO: check accordingly to reference.
+    // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
+    pub(crate) fn set_contents_desktop(uid: i32, type_: i32, monitor_id: i32);
+
+    /// Set contents of an overlay.
+    ///
+    /// This is private/hidden for safety. See `types::WindowTypeValue` for more info.
+    #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
+    // TODO: check accordingly to reference.
+    // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
+    pub(crate) fn set_contents_window(uid: i32, type_: i32, window_handle: i32);
 
     /// Returns a list of open windows and their handles.
     /// (If user has this option enabled).
@@ -101,13 +123,23 @@ extern "C" {
 
     /// Set overlay setting.
     ///
-    /// TODO: check what the following means:
-    ///
-    /// newValue: i32/f64/bool
+    /// This is private/hidden for safety. See `types::SettingValue` for more info.
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
     // TODO: check accordingly to reference.
     // reference: window.SetOverlaySetting(uid, setting, value);
-    pub fn set_overlay_setting(uid: i32, setting: i32);
+    pub(crate) fn set_overlay_setting_i32(uid: i32, setting: i32, new_value: i32);
+
+    /// Set overlay setting.
+    ///
+    /// This is private/hidden for safety. See `types::SettingValue` for more info.
+    #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
+    pub(crate) fn set_overlay_setting_f64(uid: i32, setting: i32, new_value: f64);
+
+    /// Set overlay setting.
+    ///
+    /// This is private/hidden for safety. See `types::SettingValue` for more info.
+    #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
+    pub(crate) fn set_overlay_setting_bool(uid: i32, setting: i32, new_value: bool);
 
     /// Close the specified overlay.
     #[wasm_bindgen(js_namespace = window, js_name = CloseOverlay)]
