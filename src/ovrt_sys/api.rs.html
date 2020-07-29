@@ -183,22 +183,58 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Note: At this time any API call that returns a value needs a callback assigned to return the value to, the &#39;callback&#39; value will just be the string name of a function.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Any API call that returns a value also had an additional string optional parameter, this can be used to share data back to the callback function.</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">types</span>, <span class="ident">wasm_bindgen</span>};
+<span class="kw">use</span> <span class="ident">web_sys</span>::<span class="ident">console</span>::<span class="ident">log_2</span>;
+
+<span class="doccomment">/// Spawn a new overlay.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Returns an `uid`.</span>
+<span class="comment">// TODO: check accordingly to reference.</span>
+<span class="comment">// reference: window.SpawnOverlay(JSON.stringify(transform), &quot;ovrtWinSpawned&quot;);</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn_overlay</span>(
+    <span class="ident">transform_info</span>: <span class="kw-2">&amp;</span><span class="ident">types</span>::<span class="ident">OVROverlayTransform</span>,
+    <span class="ident">callback</span>: <span class="ident">String</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i32</span>, <span class="ident">serde_json</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">info</span> <span class="op">=</span> <span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="ident">transform_info</span>)<span class="question-mark">?</span>;
+    <span class="kw">unsafe</span> {
+        <span class="ident">log_2</span>(<span class="kw-2">&amp;</span><span class="string">&quot;transform:&quot;</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">info</span>).<span class="ident">into</span>());
+    }
+    <span class="prelude-val">Ok</span>(<span class="kw">unsafe</span> { <span class="ident">spawn_overlay_str</span>(<span class="ident">info</span>, <span class="ident">callback</span>) })
+}
 
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>]</span>
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+
     <span class="doccomment">/// Spawn a new overlay.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns an `uid`.</span>
+    <span class="doccomment">/// Returns an `uid`.  </span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is private/hidden for safety. See `spawn_overlay` for more info.</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">SpawnOverlay</span>)]</span>
-    <span class="comment">// TODO: check accordingly to reference.</span>
-    <span class="comment">// reference: window.SpawnOverlay(JSON.stringify(transform), &quot;ovrtWinSpawned&quot;);</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn_overlay</span>(<span class="ident">transformInfo</span>: <span class="ident">types</span>::<span class="ident">OVROverlayTransform</span>, <span class="ident">callback</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span>;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">spawn_overlay_str</span>(<span class="ident">transform_info</span>: <span class="ident">String</span>, <span class="ident">callback</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span>;
 
     <span class="doccomment">/// Set contents of an overlay.</span>
     <span class="doccomment">///</span>
