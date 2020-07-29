@@ -9,7 +9,8 @@ pub use window_type::WindowTypeValue;
 
 /// OVROverlayTransform.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrOverlayTransform
 pub struct OVROverlayTransform {
     ///	X position of window.
@@ -52,9 +53,42 @@ pub struct OVROverlayTransform {
     pub should_save: bool,
 }
 
+impl Default for OVROverlayTransform {
+    fn default() -> Self {
+        Self {
+            pos_x: 0.,
+            pos_y: 0.,
+            pos_z: 0.,
+            rot_x: 0.,
+            rot_y: 0.,
+            rot_z: 0.,
+            size: 0.25,
+            opacity: 1.,
+            curvature: 0.,
+            framerate: 60,
+            eco_mode: true,
+            look_hiding: false,
+            attached_device: 0,
+            should_save: false,
+        }
+    }
+}
+
 /// OVRWebContents.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
+)]
+#[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrWebContents
 pub struct OVRWebContents {
     ///	URL of web page to display.
@@ -80,7 +114,8 @@ impl OVRWebContents {
 ///
 /// Refer to Unity documentation for 'Bounds'.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrOverlayBounds
 pub struct OVROverlayBounds {
     ///	Vector3 Center - X.
@@ -107,7 +142,8 @@ pub struct OVROverlayBounds {
 ///
 /// 0 to 1.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrFingerCurls
 pub struct OVRFingerCurls {
     ///	Thumb curl.
@@ -124,7 +160,8 @@ pub struct OVRFingerCurls {
 
 /// OVRDeviceUpdate.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrDeviceUpdate
 pub struct OVRDeviceUpdate {
     ///	If this is the active controller. (Always true for HMD).
@@ -166,7 +203,8 @@ pub struct OVRDeviceUpdate {
 
 /// OVRTransformUpdate.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrTransformUpdate
 pub struct OVRTransformUpdate {
     ///	X position.
@@ -196,7 +234,19 @@ pub struct OVRTransformUpdate {
 }
 
 #[wasm_bindgen]
-#[derive(Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
+)]
+#[serde(rename_all = "camelCase")]
 // TODO: check this rename from KeyValuePair
 pub struct KeyValuePairI32String {
     pub name: Option<i32>,

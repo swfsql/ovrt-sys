@@ -3,16 +3,34 @@
 //! Any API call that returns a value also had an additional string optional parameter, this can be used to share data back to the callback function.
 
 use super::{types, wasm_bindgen};
+use web_sys::console::log_2;
+
+/// Spawn a new overlay.
+///
+/// Returns an `uid`.
+// TODO: check accordingly to reference.
+// reference: window.SpawnOverlay(JSON.stringify(transform), "ovrtWinSpawned");
+pub fn spawn_overlay(
+    transform_info: &types::OVROverlayTransform,
+    callback: String,
+) -> Result<i32, serde_json::Error> {
+    let info = serde_json::to_string(transform_info)?;
+    unsafe {
+        log_2(&"transform:".into(), &(&info).into());
+    }
+    Ok(unsafe { spawn_overlay_str(info, callback) })
+}
 
 #[wasm_bindgen]
 extern "C" {
+
     /// Spawn a new overlay.
     ///
-    /// Returns an `uid`.
+    /// Returns an `uid`.  
+    ///
+    /// This is private/hidden for safety. See `spawn_overlay` for more info.
     #[wasm_bindgen(js_namespace = window, js_name = SpawnOverlay)]
-    // TODO: check accordingly to reference.
-    // reference: window.SpawnOverlay(JSON.stringify(transform), "ovrtWinSpawned");
-    pub fn spawn_overlay(transformInfo: types::OVROverlayTransform, callback: String) -> i32;
+    pub(crate) fn spawn_overlay_str(transform_info: String, callback: String) -> i32;
 
     /// Set contents of an overlay.
     ///

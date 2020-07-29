@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <title>App Title</title>
+  </head>
+  <body>
+    <noscript>This page uses wasm and js. Please enable javascript.</noscript>
+    <canvas id="canvas"></canvas>
+    <script type="module">
+      import init, { wasm_main } from "./pkg/ovrt_sys.js";
+      async function run() {
+        await init();
+        wasm_main();
+      }
+      run();
+    </script>
+  </body>
+</html>

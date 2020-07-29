@@ -2,7 +2,9 @@
 
 use super::{types, wasm_bindgen};
 #[wasm_bindgen]
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(
+    Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
+)]
 #[repr(i32)]
 // TODO: check this rename from Devices
 pub enum Device {
@@ -23,7 +25,9 @@ impl Default for Device {
 ///
 /// See also:
 #[wasm_bindgen]
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(
+    Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
+)]
 #[repr(i32)]
 // TODO: check this rename
 pub enum WindowType {
@@ -62,7 +66,9 @@ impl From<&types::window_type::WindowTypeValue> for WindowType {
 ///
 /// See also: `Value` and `SettingValue`.
 #[wasm_bindgen]
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(
+    Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
+)]
 #[repr(i32)]
 // TODO: check this rename from Settings
 pub enum Setting {
