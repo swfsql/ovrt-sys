@@ -6,6 +6,7 @@ pub mod window_type;
 pub use setting::SettingValue;
 pub use window_type::WindowTypeValue;
 
+#[derive(Debug, Default, Clone, druid::Data)]
 pub struct Uid(pub i32);
 
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]

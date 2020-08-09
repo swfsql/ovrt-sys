@@ -7,11 +7,14 @@
   <body>
     <noscript>This page uses wasm and js. Please enable javascript.</noscript>
     <canvas id="canvas"></canvas>
+
+    <!-- note that the script below must not be a module,
+    so that it can reexport items into the global scope -->
     <script>
       function ovrt_sys_use_workaroud() {
         // workaroud to import module items
-        console.trace("using workaroud");
-        // spawn_overlay_callback = window.ovrt_sys.spawn_overlay_callback;
+        console.trace("re-exporting event callbacks into the global scope");
+        spawn_overlay_callback = window.ovrt_sys.spawn_overlay_callback;
         DevicePositionUpdate = window.ovrt_sys.DevicePositionUpdate;
         ReceiveMessage = window.ovrt_sys.ReceiveMessage;
         InteractionStateChanged = window.ovrt_sys.InteractionStateChanged;
@@ -34,7 +37,6 @@
         wasm_main,
       } from "./pkg/ovrt_sys.js";
 
-      // exports currently not used
       export {
         spawn_overlay_callback,
         DevicePositionUpdate,

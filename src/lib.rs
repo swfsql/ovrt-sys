@@ -31,24 +31,56 @@ pub fn wasm_main() {
     main()
 }
 
-#[wasm_bindgen(js_namespace = window)]
-pub fn spawn_overlay_callback(uid: String) {
-    log!("spawn_overlay_callback:", uid);
+#[wasm_bindgen]
+pub fn spawn_overlay_callback(uid: i32) {
+    log!("spawn_overlay_callback.", "Uid:", uid);
 }
 
 pub fn main() {
-    log!("init main");
-    let transform = types::OVROverlayTransform::default();
-
-    log!("calling spawn_overlay");
-    let uid = api::spawn_overlay(&transform, "spawn_overlay_callback".into());
-    log!("called spawn_overlay. Uid:", uid.0);
-
-    // window.SpawnOverlay(JSON.stringify(transform), "spawn_overlay_callback");
+    log!("app started");
+    let main_window = WindowDesc::new(ui_builder)
+        .title(LocalizedString::new("app-window-title").with_placeholder("App Window Title"));
+    // Set our initial data
+    let data = AppData::default();
+    AppLauncher::with_window(main_window)
+        .use_simple_logger()
+        .launch(data)
+        .expect("launch failed");
+    log!("app finished");
 
     // ovrt.createWebWin(
     //     `https://www.twitch.tv/popout/${username}/chat?popout=`,
     //     400,
     //     500
     //   );
+}
+
+use druid::im::Vector;
+// use druid::lens::{self, LensExt};
+use druid::widget::{Button, Flex};
+// use druid::widget::{Label, List, Scroll};
+use druid::{AppLauncher, Data, Lens, LocalizedString, Widget, WidgetExt, WindowDesc};
+
+#[derive(Debug, Clone, Default, Data, Lens)]
+struct AppData {
+    overlays: Vector<types::Uid>,
+}
+
+fn ui_builder() -> impl Widget<AppData> {
+    let mut root = Flex::column();
+
+    root.add_child(
+        Button::new("Add Overlay")
+            .on_click(|_ctx, _data: &mut AppData, _| {
+                log!("calling spawn_overlay");
+                let uid = api::spawn_overlay(&Default::default(), "spawn_overlay_callback".into());
+                log!("called spawn_overlay", "Uid:", uid.0);
+            })
+            .fix_height(30.0)
+            .expand_width(),
+    );
+
+    // Mark the widget as needing its layout rects painted
+    // root.debug_paint_layout()
+    root
 }
