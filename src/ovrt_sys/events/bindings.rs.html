@@ -65,13 +65,6 @@
 <span id="65">65</span>
 <span id="66">66</span>
 <span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">types</span>::{<span class="self">self</span>, <span class="ident">Uid</span>},
@@ -81,7 +74,6 @@
 <span class="doccomment">/// Sends HMD and left/right controller position and rotation, also shows the active controller.</span>
 <span class="doccomment">/// (Needs to be enabled per overlay, refer to API above).</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">DevicePositionUpdate</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = DevicePositionUpdate)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function DevicePositionUpdate(deviceInfo) {</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">device_position_update</span>(<span class="ident">device_info</span>: <span class="ident">String</span>) {
@@ -92,7 +84,6 @@
 
 <span class="doccomment">/// Receives messages from other browser instances.</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">ReceiveMessage</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = ReceiveMessage)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function ReceiveMessage(message) {</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">receive_message</span>(<span class="ident">message</span>: <span class="ident">String</span>) {
@@ -102,7 +93,6 @@
 <span class="doccomment">/// If the user is interacting with the current overlay.</span>
 <span class="doccomment">/// (Mouse over).</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">InteractionStateChanged</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = InteractionStateChanged)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function InteractionStateChanged(isInteracting) {</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interaction_state_changed</span>(<span class="ident">is_interacting</span>: <span class="ident">bool</span>) {
@@ -111,7 +101,6 @@
 
 <span class="doccomment">/// Called when an overlay is spawned.</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">OverlayOpened</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = OverlayOpened)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function OverlayOpened(uid) {</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overlay_opened</span>(<span class="ident">uid</span>: <span class="ident">i32</span>) {
@@ -120,7 +109,6 @@
 
 <span class="doccomment">/// Called when an overlay is closed.</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">OverlayClosed</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = OverlayClosed)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function OverlayClosed(uid) {</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overlay_closed</span>(<span class="ident">uid</span>: <span class="ident">i32</span>) {
@@ -130,7 +118,6 @@
 <span class="doccomment">/// Called when an overlay is moved or its size changes.</span>
 <span class="doccomment">/// (Needs to be enabled per overlay, refer to API above).</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">OverlayTransformChanged</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = OverlayTransformChanged)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function OverlayTransformChanged(updateData) {</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overlay_transform_changed</span>(<span class="ident">uid</span>: <span class="ident">i32</span>, <span class="ident">data</span>: <span class="ident">String</span>) {
@@ -141,7 +128,6 @@
 
 <span class="doccomment">/// Called when the API has finished injecting into the browser and the API can now be used.</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">APIInit</span>)]</span>
-<span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = APIInit)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: none</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">api_init</span>() {
