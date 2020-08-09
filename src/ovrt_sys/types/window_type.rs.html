@@ -53,8 +53,14 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">api</span>, <span class="ident">consts</span>, <span class="ident">types</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">api</span>, <span class="ident">consts</span>,
+    <span class="ident">types</span>::{<span class="self">self</span>, <span class="ident">Uid</span>},
+};
 
 <span class="doccomment">/// Any kind of value, to be coupled with `WindowType` into a `WindowTypeValue`.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">serde</span>::<span class="ident">Serialize</span>, <span class="ident">serde</span>::<span class="ident">Deserialize</span>)]</span>
@@ -97,12 +103,12 @@
     <span class="doccomment">/// TODO: if this presents a too high overhead, new abstractions</span>
     <span class="doccomment">/// can be introduced to call `set_contents_...` functions</span>
     <span class="doccomment">/// in a more direct manner.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_in_overlay</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">uid</span>: <span class="ident">i32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_in_overlay</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">uid</span>: <span class="ident">Uid</span>) {
         <span class="kw">use</span> <span class="ident">WindowTypeValue</span>::<span class="kw-2">*</span>;
         <span class="kw">let</span> <span class="ident">window_type</span> <span class="op">=</span> <span class="ident">consts</span>::<span class="ident">WindowType</span>::<span class="ident">from</span>(<span class="self">self</span>) <span class="kw">as</span> <span class="ident">i32</span>;
         <span class="kw">unsafe</span> {
             <span class="kw">match</span> <span class="self">self</span> {
-                <span class="ident">WebPage</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">api</span>::<span class="ident">set_contents_website</span>(<span class="ident">uid</span>, <span class="ident">window_type</span>, <span class="ident">v</span>.<span class="ident">clone</span>()),
+                <span class="ident">WebPage</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">api</span>::<span class="ident">set_contents_website</span>(<span class="ident">uid</span>, <span class="ident">window_type</span>, <span class="ident">v</span>),
                 <span class="ident">DesktopCapture</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">api</span>::<span class="ident">set_contents_desktop</span>(<span class="ident">uid</span>, <span class="ident">window_type</span>, <span class="kw-2">*</span><span class="ident">v</span>),
                 <span class="ident">WindowCapture</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">api</span>::<span class="ident">set_contents_window</span>(<span class="ident">uid</span>, <span class="ident">window_type</span>, <span class="kw-2">*</span><span class="ident">v</span>),
             }
