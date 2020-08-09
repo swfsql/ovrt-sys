@@ -1,4 +1,4 @@
-use crate::{api, consts};
+use crate::{api, consts, types::Uid};
 
 /// Any kind of value, to be coupled with `Setting` into a `SettingValue`.
 #[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
@@ -23,7 +23,7 @@ impl From<&SettingValue> for Value {
     }
 }
 
-/// This is Aa composition of `Setting` and `Value`,
+/// This is a composition of `Setting` and `Value`,
 /// used to change settings in an overlay.
 #[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
 pub enum SettingValue {
@@ -51,7 +51,7 @@ impl SettingValue {
     /// TODO: if this presents a too high overhead, new abstractions
     /// can be introduced to call `set_overlay_setting_...` functions
     /// in a more direct manner.
-    pub fn set_in_overlay(&self, uid: i32) {
+    pub fn set_in_overlay(&self, uid: Uid) {
         use SettingValue::*;
         let setting = consts::Setting::from(self) as i32;
         unsafe {

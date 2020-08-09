@@ -23,7 +23,7 @@ impl Default for Device {
 
 /// Represents kinds of window types.
 ///
-/// See also:
+/// See also: `types::WindowTypeValue`.
 #[wasm_bindgen]
 #[derive(
     Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
@@ -64,7 +64,7 @@ impl From<&types::window_type::WindowTypeValue> for WindowType {
 
 /// Represents kinds of setting values.
 ///
-/// See also: `Value` and `SettingValue`.
+/// See also: `types::SettingValue`.
 #[wasm_bindgen]
 #[derive(
     Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,

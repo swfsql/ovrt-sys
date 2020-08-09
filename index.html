@@ -7,10 +7,63 @@
   <body>
     <noscript>This page uses wasm and js. Please enable javascript.</noscript>
     <canvas id="canvas"></canvas>
+    <script>
+      function ovrt_sys_use_workaroud() {
+        // workaroud to import module items
+        console.trace("using workaroud");
+        // spawn_overlay_callback = window.ovrt_sys.spawn_overlay_callback;
+        DevicePositionUpdate = window.ovrt_sys.DevicePositionUpdate;
+        ReceiveMessage = window.ovrt_sys.ReceiveMessage;
+        InteractionStateChanged = window.ovrt_sys.InteractionStateChanged;
+        OverlayOpened = window.ovrt_sys.OverlayOpened;
+        OverlayClosed = window.ovrt_sys.OverlayClosed;
+        OverlayTransformChanged = window.ovrt_sys.OverlayTransformChanged;
+        APIInit = window.ovrt_sys.APIInit;
+      }
+    </script>
     <script type="module">
-      import init, { wasm_main } from "./pkg/ovrt_sys.js";
+      import init, {
+        spawn_overlay_callback,
+        DevicePositionUpdate,
+        ReceiveMessage,
+        InteractionStateChanged,
+        OverlayOpened,
+        OverlayClosed,
+        OverlayTransformChanged,
+        APIInit,
+        wasm_main,
+      } from "./pkg/ovrt_sys.js";
+
+      // exports currently not used
+      export {
+        spawn_overlay_callback,
+        DevicePositionUpdate,
+        ReceiveMessage,
+        InteractionStateChanged,
+        OverlayOpened,
+        OverlayClosed,
+        OverlayTransformChanged,
+        APIInit,
+      };
+
       async function run() {
         await init();
+
+        console.trace("creating workaroud");
+
+        // workaroud to export module items
+        window.ovrt_sys = {
+          spawn_overlay_callback: spawn_overlay_callback,
+          DevicePositionUpdate: DevicePositionUpdate,
+          ReceiveMessage: ReceiveMessage,
+          InteractionStateChanged: InteractionStateChanged,
+          OverlayOpened: OverlayOpened,
+          OverlayClosed: OverlayClosed,
+          OverlayTransformChanged: OverlayTransformChanged,
+          APIInit: APIInit,
+        };
+        ovrt_sys_use_workaroud();
+
         wasm_main();
       }
       run();

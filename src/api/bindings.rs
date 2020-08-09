@@ -1,36 +1,15 @@
-//! Note: At this time any API call that returns a value needs a callback assigned to return the value to, the 'callback' value will just be the string name of a function.
-//!
-//! Any API call that returns a value also had an additional string optional parameter, this can be used to share data back to the callback function.
-
-use super::{types, wasm_bindgen};
-use web_sys::console::log_2;
-
-/// Spawn a new overlay.
-///
-/// Returns an `uid`.
-// TODO: check accordingly to reference.
-// reference: window.SpawnOverlay(JSON.stringify(transform), "ovrtWinSpawned");
-pub fn spawn_overlay(
-    transform_info: &types::OVROverlayTransform,
-    callback: String,
-) -> Result<i32, serde_json::Error> {
-    let info = serde_json::to_string(transform_info)?;
-    unsafe {
-        log_2(&"transform:".into(), &(&info).into());
-    }
-    Ok(unsafe { spawn_overlay_str(info, callback) })
-}
+use crate::wasm_bindgen;
 
 #[wasm_bindgen]
 extern "C" {
 
     /// Spawn a new overlay.
     ///
-    /// Returns an `uid`.  
-    ///
     /// This is private/hidden for safety. See `spawn_overlay` for more info.
+    ///
+    /// Returns an uid.
     #[wasm_bindgen(js_namespace = window, js_name = SpawnOverlay)]
-    pub(crate) fn spawn_overlay_str(transform_info: String, callback: String) -> i32;
+    pub(crate) fn spawn_overlay(transform_info: String, callback: String) -> i32;
 
     /// Set contents of an overlay.
     ///
@@ -38,7 +17,7 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
     // TODO: check accordingly to reference.
     // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
-    pub(crate) fn set_contents_website(uid: i32, type_: i32, contents: types::OVRWebContents);
+    pub(crate) fn set_contents_website(uid: i32, type_: i32, contents: String);
 
     /// Set contents of an overlay.
     ///
@@ -64,7 +43,7 @@ extern "C" {
     // TODO: check accordingly to reference.
     // reference: window.GetWindowTitles("completeIntervalWinTitles");
     // window.GetWindowTitles("ovrtWinTitles");
-    pub fn get_window_titles(callback: String) -> types::KeyValuePairI32String;
+    pub(crate) fn get_window_titles(callback: String) -> String;
 
     /// (Used for SetContents monitorId).
     ///
@@ -73,13 +52,13 @@ extern "C" {
     // TODO: check accordingly to reference.
     // reference: GetMonitorCount("ovrtMonitorTotal");
     // window.GetMonitorCount(callback, data);
-    pub fn get_monitor_count(callback: String) -> i32;
+    pub(crate) fn get_monitor_count(callback: String) -> i32;
 
     /// Refresh a browser page.
     #[wasm_bindgen(js_namespace = window, js_name = Refresh)]
     // TODO: check accordingly to reference.
     // reference: window.Refresh(uid);
-    pub fn refresh(uid: i32);
+    pub(crate) fn refresh(uid: i32);
 
     /// Get `OVROverlayTransform` of a specified overlay.
     ///
@@ -87,7 +66,7 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayTransform)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
-    pub fn get_overlay_transform(uid: i32, callback: String) -> types::OVROverlayTransform;
+    pub(crate) fn get_overlay_transform(uid: i32, callback: String) -> String;
 
     /// Get type of overlay.
     /// (Browser, window capture, desktop capture).
@@ -96,7 +75,7 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayType)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayType(uid, callback);
-    pub fn get_overlay_type(uid: i32, callback: String) -> i32;
+    pub(crate) fn get_overlay_type(uid: i32, callback: String) -> i32;
 
     /// Get bounds of overlay bounding box.
     /// (Refer to Unity documentation 'Bounds' section).
@@ -105,7 +84,7 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayBounds)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayBounds(uid, callback);
-    pub fn get_overlay_bounds(uid: i32, callback: String) -> types::OVROverlayBounds;
+    pub(crate) fn get_overlay_bounds(uid: i32, callback: String) -> String;
 
     /// Get finger curl positions.
     ///
@@ -114,20 +93,20 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetFingerCurls)]
     // TODO: check accordingly to reference.
     // reference: window.GetFingerCurls("completeFingerCurls");
-    pub fn get_finger_curls(callback: String) -> types::OVRFingerCurls;
+    pub(crate) fn get_finger_curls(callback: String) -> String;
 
     /// Set position of an overlay.
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlayPosition)]
     // TODO: check accordingly to reference.
     // reference: window.SetOverlayPosition(uid, pos.x, pos.y, pos.z);
-    pub fn set_overlay_position(uid: i32, posX: f64, posY: f64, posZ: f64);
+    pub(crate) fn set_overlay_position(uid: i32, posX: f64, posY: f64, posZ: f64);
 
     /// Set rotation of an overlay.
     /// (EulerAngles).
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlayRotation)]
     // TODO: check accordingly to reference.
     // reference: window.SetOverlayRotation(uid, rot.x, rot.y, rot.z);
-    pub fn set_overlay_rotation(uid: i32, rotX: f64, rotY: f64, rotZ: f64);
+    pub(crate) fn set_overlay_rotation(uid: i32, rotX: f64, rotY: f64, rotZ: f64);
 
     /// Set overlay setting.
     ///
@@ -153,21 +132,21 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = CloseOverlay)]
     // TODO: check accordingly to reference.
     // reference: window.CloseOverlay(uid);
-    pub fn close_overlay(uid: i32);
+    pub(crate) fn close_overlay(uid: i32);
 
     /// Send device position/rotation data to the calling overlay.
     /// (Refer to 'Events' below).
     #[wasm_bindgen(js_namespace = window, js_name = SendDeviceData)]
     // TODO: check accordingly to reference.
     // reference: window.SendDeviceData(enable);
-    pub fn send_device_data(enabled: bool);
+    pub(crate) fn send_device_data(enabled: bool);
 
     /// Send overlay position/rotation data to the calling overlay.
     /// (Refer to 'Events' below).
     #[wasm_bindgen(js_namespace = window, js_name = SendOverlayPositions)]
     // TODO: check accordingly to reference.
     // reference: window.SendOverlayPositions(enable);
-    pub fn send_overlay_positions(enabled: bool);
+    pub(crate) fn send_overlay_positions(enabled: bool);
 
     /// Send message all other open browser instances.
     /// (Calls 'ReceiveMessage').
@@ -177,7 +156,7 @@ extern "C" {
     // window.BroadcastMessage(JSON.stringify({broadcast: false,event: event,data: data,senderId: senderId,targetId: targetId,}));
     //
     // check send_message below
-    pub fn broadcast_message(message: String);
+    pub(crate) fn broadcast_message(message: String);
 
     /// Send message to specific browser instance.
     /// (Calls 'ReceiveMessage').
@@ -186,18 +165,18 @@ extern "C" {
     // reference: none
     // TODO: actually, it appears that this was merged into broadcast_message
     // but now it has its own api call
-    pub fn send_message(uid: i32, message: String);
+    pub(crate) fn send_message(uid: i32, message: String);
 
     /// Set if this overlay should receive keyboard inputs.
     /// (This will block the keyboard working on OVR Toolkit windows!).
     #[wasm_bindgen(js_namespace = window, js_name = SetKeyboardFocus)]
     // TODO: check accordingly to reference.
     // reference: none
-    pub fn set_keyboard_focus(enabled: bool);
+    pub(crate) fn set_keyboard_focus(enabled: bool);
 
     /// Sets the title of the browser that is visible in the Window List of OVR Toolkit.
     #[wasm_bindgen(js_namespace = window, js_name = SetBrowserTitle)]
     // TODO: check accordingly to reference.
     // reference: none
-    pub fn set_browser_title(title: String);
+    pub(crate) fn set_browser_title(title: String);
 }

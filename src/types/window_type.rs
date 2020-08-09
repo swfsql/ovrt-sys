@@ -1,4 +1,7 @@
-use crate::{api, consts, types};
+use crate::{
+    api, consts,
+    types::{self, Uid},
+};
 
 /// Any kind of value, to be coupled with `WindowType` into a `WindowTypeValue`.
 #[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
@@ -41,12 +44,12 @@ impl WindowTypeValue {
     /// TODO: if this presents a too high overhead, new abstractions
     /// can be introduced to call `set_contents_...` functions
     /// in a more direct manner.
-    pub fn set_in_overlay(&self, uid: i32) {
+    pub fn set_in_overlay(&self, uid: Uid) {
         use WindowTypeValue::*;
         let window_type = consts::WindowType::from(self) as i32;
         unsafe {
             match self {
-                WebPage(v) => api::set_contents_website(uid, window_type, v.clone()),
+                WebPage(v) => api::set_contents_website(uid, window_type, v),
                 DesktopCapture(v) => api::set_contents_desktop(uid, window_type, *v),
                 WindowCapture(v) => api::set_contents_window(uid, window_type, *v),
             }
