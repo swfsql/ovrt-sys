@@ -12,6 +12,7 @@ extern "C" {
     /// This is private/hidden for safety. See `spawn_overlay` for more info.
     ///
     /// Returns an uid.
+    // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = SpawnOverlay)]
     pub(crate) fn spawn_overlay_with_callback(transform_info: String, callback: String) -> i32;
 
@@ -26,6 +27,7 @@ extern "C" {
     /// Set contents of an overlay.
     ///
     /// This is private/hidden for safety. See `types::WindowTypeValue` for more info.
+    // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
     // TODO: check accordingly to reference.
     // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
@@ -51,6 +53,7 @@ extern "C" {
     /// (If user has this option enabled).
     ///
     /// Returns `windowTitles`.
+    // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = GetWindowTitles)]
     // TODO: check accordingly to reference.
     // reference: window.GetWindowTitles("completeIntervalWinTitles");
@@ -85,6 +88,7 @@ extern "C" {
     /// Get `OVROverlayTransform` of a specified overlay.
     ///
     /// Returns `transformInfo`.
+    // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayTransform)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
@@ -111,6 +115,7 @@ extern "C" {
     /// (Refer to Unity documentation 'Bounds' section).
     ///
     /// Returns `bounds`.
+    // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayBounds)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayBounds(uid, callback);
@@ -120,6 +125,7 @@ extern "C" {
     ///
     /// Returns `curls`.
     /// (Returns 0 for all values if user is in Simulator Mode).
+    // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = GetFingerCurls)]
     // TODO: check accordingly to reference.
     // reference: window.GetFingerCurls("completeFingerCurls");
@@ -158,11 +164,20 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
     pub(crate) fn set_overlay_setting_bool(uid: i32, setting: i32, new_value: bool);
 
+    // /// Close the specified overlay.
+    // #[wasm_bindgen(js_namespace = window, js_name = CloseOverlay)]
+    // // TODO: check accordingly to reference.
+    // // reference: window.CloseOverlay(uid);
+    // // https://github.com/swfsql/ovrt-sys/issues/6
+    // pub(crate) fn close_overlay(uid: i32);
+
     /// Close the specified overlay.
     #[wasm_bindgen(js_namespace = window, js_name = CloseOverlay)]
     // TODO: check accordingly to reference.
     // reference: window.CloseOverlay(uid);
-    pub(crate) fn close_overlay(uid: i32);
+    // https://github.com/swfsql/ovrt-sys/issues/6
+    // https://github.com/swfsql/ovrt-sys/issues/2
+    pub(crate) fn close_overlay_str(uid: String);
 
     /// Send device position/rotation data to the calling overlay.
     /// (Refer to 'Events' below).

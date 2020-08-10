@@ -4,13 +4,14 @@ use super::{api, types};
 use crate::{log, v};
 use druid::im::Vector;
 use druid::widget::{Button, Flex};
+use druid::widget::{Either, Label, List, Scroll};
 use druid::{
-    AppLauncher, Data, ExtEventSink, Lens, LocalizedString, Widget, WidgetExt, WindowDesc,
+    AppLauncher, Data, ExtEventSink, Lens, LocalizedString, UnitPoint, Widget, WidgetExt,
+    WindowDesc,
 };
-// use druid::widget::{Label, List, Scroll};
-// use druid::lens::{self, LensExt};
-
 use once_cell::sync::OnceCell;
+
+// use druid::lens::{self, LensExt};
 
 pub struct Delegate {
     // unneeded field since this will be static, but anyway..
@@ -19,7 +20,14 @@ pub struct Delegate {
 
 #[derive(Debug, Clone, Default, Data, Lens)]
 pub struct AppData {
-    overlays: Vector<types::Uid>,
+    overlays: Vector<Overlay>,
+}
+
+#[derive(Debug, Clone, Data, PartialOrd, Ord, PartialEq, Eq)]
+pub enum Overlay {
+    Spawning,
+    Live(types::Uid),
+    Closing(types::Uid),
 }
 
 pub fn global_event_sink(app_launcher: Option<&AppLauncher<AppData>>) -> &'static ExtEventSink {
@@ -53,16 +61,33 @@ impl druid::AppDelegate<AppData> for Delegate {
         _ctx: &mut druid::DelegateCtx,
         _target: druid::Target,
         cmd: &druid::Command,
-        _data: &mut AppData,
+        data: &mut AppData,
         _env: &druid::Env,
     ) -> bool {
         if let Some(uid) = cmd
             .get(cmd::FINISH_SPAWN_OVERLAY_EVENT)
             .or_else(|| cmd.get(cmd::FINISH_SPAWN_OVERLAY_CALLBACK))
         {
-            log!(v(&uid));
+            let ov = data
+                .overlays
+                .back_mut()
+                .expect("expecting some overlay item");
+            // the last overlay should be an spawning one
+            // otherwise something must have gone wrong
+            assert_eq!(Overlay::Spawning, *ov);
+            *ov = Overlay::Live(uid.clone());
         } else if let Some(uid) = cmd.get(cmd::FINISH_CLOSE_OVERLAY_EVENT) {
-            log!(v(&uid));
+            let (i, _uid) = data
+                .overlays
+                .iter()
+                .enumerate()
+                .filter_map(|(i, ov)| match ov {
+                    Overlay::Closing(inner_uid) => Some((i, inner_uid)),
+                    _ => None,
+                })
+                .find(|(_i, inner_uid)| *inner_uid == uid)
+                .expect("could not find the uid of the removed overlay");
+            data.overlays.remove(i);
         } else if let Some(win_titles) = cmd.get(cmd::FINISH_GET_WINDOW_TITLES_CALLBACK) {
             log!(win_titles);
         } else if let Some(monitor_count) = cmd.get(cmd::FINISH_GET_MONITOR_COUNT_CALLBACK) {
@@ -98,14 +123,70 @@ fn ui_builder() -> impl Widget<AppData> {
 
     root.add_child(
         Button::new("Add Overlay")
-            .on_click(|_ctx, _data: &mut AppData, _| {
-                log!("calling spawn_overlay");
-                let uid = api::spawn_overlay(&Default::default());
-                log!("called spawn_overlay", v(&uid));
+            .on_click(|_ctx, data: &mut AppData, _| {
+                data.overlays.push_back(Overlay::Spawning);
+                // https://github.com/swfsql/ovrt-sys/issues/5
+                let _zero_uid = api::spawn_overlay(&Default::default());
             })
             .fix_height(30.0)
             .expand_width(),
     );
+
+    let list = List::new(|| {
+        Flex::row()
+            .with_child(
+                Label::new(|ov: &Overlay, _env: &_| {
+                    use Overlay::*;
+                    match ov {
+                        Spawning => "Spawning..".to_string(),
+                        Live(uid) => format!("Overlay #{}", uid.0),
+                        Closing(uid) => format!("Closing #{}..", uid.0),
+                    }
+                }), // .align_vertical(UnitPoint::LEFT),
+            )
+            .with_flex_spacer(1.0)
+            .with_child(Either::new(
+                |ov: &Overlay, _env| {
+                    if let Overlay::Live(_) = ov {
+                        true
+                    } else {
+                        false
+                    }
+                },
+                Button::new("Delete")
+                    .on_click(|_ctx, ov: &mut Overlay, _env| {
+                        if let Overlay::Live(uid) = ov {
+                            let uid = uid.clone();
+                            *ov = Overlay::Closing(uid.clone());
+                            api::close_overlay(uid);
+                        } else {
+                            unreachable!("Either should have hidden this path");
+                        }
+                    })
+                    .fix_size(80.0, 20.0)
+                    .align_vertical(UnitPoint::CENTER),
+                Label::new("Delete"),
+            ))
+        // .padding(10.0)
+        // .background(Color::rgb(0.5, 0.0, 0.5))
+        // .fix_height(50.0)
+    });
+    let list = Scroll::new(list)
+        .vertical()
+        .lens(AppData::overlays)
+        // .lens(lens::Id.map(
+        //     // Expose shared data with children data
+        //     |d: &AppData| (d.right.clone(), d.right.clone()),
+        //     |d: &mut AppData, x: (Vector<u32>, Vector<u32>)| {
+        //         // If shared data was changed reflect the changes in our AppData
+        //         d.right = x.0
+        //     },
+        // )),
+        ;
+    let mut flex_list = Flex::row();
+    flex_list.add_flex_child(list, 1.0);
+
+    root.add_flex_child(flex_list, 1.0);
 
     // Mark the widget as needing its layout rects painted
     // root.debug_paint_layout()

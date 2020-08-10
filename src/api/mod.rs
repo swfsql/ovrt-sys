@@ -190,7 +190,11 @@ pub fn set_overlay_setting_bool(uid: Uid, setting: i32, new_value: bool) {
 // TODO: check accordingly to reference.
 // reference: window.CloseOverlay(uid);
 pub fn close_overlay(uid: Uid) {
-    unsafe { b::close_overlay(uid.0) }
+    // https://github.com/swfsql/ovrt-sys/issues/6
+    // unsafe { b::close_overlay(uid.0) }
+
+    // https://github.com/swfsql/ovrt-sys/issues/6
+    unsafe { b::close_overlay_str(uid.0.to_string()) }
 }
 
 /// Send device position/rotation data to the calling overlay.

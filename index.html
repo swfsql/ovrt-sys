@@ -9,8 +9,10 @@
     <canvas id="canvas"></canvas>
 
     <!-- note that the script below must not be a module,
-    so that it can reexport items into the global scope -->
+    so that it can reexport items into the global scope 
+    https://github.com/swfsql/ovrt-sys/issues/4-->
     <script>
+      // https://github.com/swfsql/ovrt-sys/issues/4
       function ovrt_sys_use_workaroud() {
         // workaroud to import module items
         console.trace("re-exporting event callbacks into the global scope");
@@ -87,6 +89,7 @@
         console.trace("creating workaroud");
 
         // workaroud to export module items
+        // https://github.com/swfsql/ovrt-sys/issues/4
         window.ovrt_sys = {
           // events
           DevicePositionUpdate: DevicePositionUpdate,
@@ -105,6 +108,7 @@
           GetOverlayBoundsOvrtSysCallback: GetOverlayBoundsOvrtSysCallback,
           GetFingerCurlsOvrtSysCallback: GetFingerCurlsOvrtSysCallback,
         };
+        // https://github.com/swfsql/ovrt-sys/issues/4
         ovrt_sys_use_workaroud();
 
         wasm_main();

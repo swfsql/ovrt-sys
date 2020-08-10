@@ -7,7 +7,9 @@ pub use setting::SettingValue;
 pub use window_type::WindowTypeValue;
 
 #[cfg_attr(feature = "druid", derive(druid::Data))]
-#[derive(Debug, Default, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Debug, Default, Clone, PartialOrd, Ord, PartialEq, Eq, serde::Serialize, serde::Deserialize,
+)]
 pub struct Uid(pub i32);
 
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]

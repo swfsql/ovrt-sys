@@ -9,6 +9,7 @@ use crate::{
 
 /// Sends HMD and left/right controller position and rotation, also shows the active controller.
 /// (Needs to be enabled per overlay, refer to API above).
+// https://github.com/swfsql/ovrt-sys/issues/2
 #[wasm_bindgen(js_name = DevicePositionUpdate)]
 // TODO: check accordingly to reference.
 // reference: function DevicePositionUpdate(deviceInfo) {
@@ -53,6 +54,7 @@ pub fn overlay_closed(uid: i32) {
 
 /// Called when an overlay is moved or its size changes.
 /// (Needs to be enabled per overlay, refer to API above).
+// https://github.com/swfsql/ovrt-sys/issues/2
 #[wasm_bindgen(js_name = OverlayTransformChanged)]
 // TODO: check accordingly to reference.
 // reference: function OverlayTransformChanged(updateData) {

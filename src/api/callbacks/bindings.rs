@@ -46,6 +46,7 @@ pub fn get_monitor_count(monitor_count: i32) {
 /// Get `OVROverlayTransform` of a specified overlay.
 ///
 /// Returns `transformInfo`.
+// https://github.com/swfsql/ovrt-sys/issues/2
 #[wasm_bindgen(js_name = GetOverlayTransformOvrtSysCallback)]
 // TODO: check accordingly to reference.
 // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
