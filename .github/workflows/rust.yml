@@ -112,6 +112,8 @@ jobs:
         xcopy .\target\doc .\publish\doc\ /s /e  
         xcopy .\pkg .\publish\pkg\ /s /e
         xcopy .\index.html .\publish\
+        xcopy .\index.js .\publish\
+        xcopy .\index_workaround.js .\publish\
 
     - name: Doc and Wasm deploy
       uses: peaceiris/actions-gh-pages@v3
