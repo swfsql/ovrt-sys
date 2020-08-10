@@ -78,10 +78,25 @@ jobs:
         command: doc
         args: --all --no-deps
 
-    - name: Doc deploy
+    - name: Install wasm-pack
+      uses: actions-rs/cargo@v1
+      with:
+        command: install
+        args: wasm-pack
+    
+    - name: Build Debug wasm
+    - run: wasm-pack build --target web
+
+    - name: Prepare Doc and Wasm deploy
+    - run: mkdir publish
+    - run: xcopy ./target/doc ./publish/doc /s /e  
+    - run: move ./pkg ./publish/pkg
+    - run: copy ./index.html ./publish
+
+    - name: Doc and Wasm deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: ./target/doc
+        publish_dir: ./publish
         keep_files: true
