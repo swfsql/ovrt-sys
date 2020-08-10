@@ -7,7 +7,7 @@ and on [Zetaphor/ovrt-helper](https://github.com/Zetaphor/ovrt-helper/blob/52481
 
 # Links
 
-- [ovrt-sys doc](https://swfsql.github.io/ovrt-sys/ovrt_sys/index.html).
+- [ovrt-sys doc](https://swfsql.github.io/ovrt-sys/doc/ovrt_sys/index.html).
 - Useful reading material.
   - [druid/examples/hello_web](https://github.com/linebender/druid/tree/master/druid/examples/hello_web)
   - [wasm-pack book](https://rustwasm.github.io/docs/wasm-pack/)
