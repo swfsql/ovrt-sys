@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["ovrt_sys"] = [{"text":"impl AppDelegate&lt;<a class=\"struct\" href=\"ovrt_sys/druid_ui/struct.AppData.html\" title=\"struct ovrt_sys::druid_ui::AppData\">AppData</a>&gt; for <a class=\"struct\" href=\"ovrt_sys/druid_ui/struct.Delegate.html\" title=\"struct ovrt_sys::druid_ui::Delegate\">Delegate</a>","synthetic":false,"types":["ovrt_sys::druid_ui::Delegate"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
