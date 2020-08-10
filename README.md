@@ -20,6 +20,8 @@ https://swfsql.github.io/ovrt-sys/
 
 And then re/start ovrt.
 
+You may also open [that link](https://swfsql.github.io/ovrt-sys/) in your browser, but it will fail when trying to call a function that would have been defined by ovrt itself.
+
 ## Offline Build Testing
 
 You'll need a [rust nightly toolchain](https://www.rust-lang.org/tools/install), [wasm-pack](https://rustwasm.github.io/docs/wasm-pack/prerequisites/index.html) (no need to install anything related to npm) and a file server such as [http](https://github.com/thecoshman/http#installation).
@@ -38,6 +40,8 @@ http://localhost:8000/
 ```
 
 And then re/start ovrt.
+
+You may also open [that link](http://localhost:8000/) in your browser, but it will fail when trying to call a function that would have been defined by ovrt itself.
 
 ## Useful Links
 
