@@ -42,6 +42,12 @@ jobs:
         path: target/debug
         key: windows-latest-stable-cargo-build-target-${{ hashFiles('**/Cargo.toml') }}
 
+    - name: Cache cargo release build
+      uses: actions/cache@v1
+      with:
+        path: target/release
+        key: windows-latest-stable-cargo-release-target-${{ hashFiles('**/Cargo.toml') }}
+
     - name: Cache cargo doc
       uses: actions/cache@v1
       with:
@@ -109,6 +115,8 @@ jobs:
     - name: Prepare Doc and Wasm deploy
       run: |
         mkdir publish
+        mkdir publish\doc\
+        mkdir publish\pkg\
         xcopy .\target\doc .\publish\doc\ /s /e  
         xcopy .\pkg .\publish\pkg\ /s /e
         xcopy .\index.html .\publish\
@@ -121,4 +129,4 @@ jobs:
         personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}
         publish_branch: gh-pages
         publish_dir: ./publish
-        keep_files: true
+        keep_files: false
