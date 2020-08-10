@@ -210,6 +210,21 @@
 <span id="210">210</span>
 <span id="211">211</span>
 <span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Raw bindings into the javascript API.</span>
 <span class="doccomment">//!</span>
@@ -225,6 +240,7 @@
     <span class="doccomment">/// This is private/hidden for safety. See `spawn_overlay` for more info.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns an uid.</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">SpawnOverlay</span>)]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">spawn_overlay_with_callback</span>(<span class="ident">transform_info</span>: <span class="ident">String</span>, <span class="ident">callback</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span>;
 
@@ -239,6 +255,7 @@
     <span class="doccomment">/// Set contents of an overlay.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is private/hidden for safety. See `types::WindowTypeValue` for more info.</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">SetContents</span>)]</span>
     <span class="comment">// TODO: check accordingly to reference.</span>
     <span class="comment">// reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);</span>
@@ -264,6 +281,7 @@
     <span class="doccomment">/// (If user has this option enabled).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `windowTitles`.</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">GetWindowTitles</span>)]</span>
     <span class="comment">// TODO: check accordingly to reference.</span>
     <span class="comment">// reference: window.GetWindowTitles(&quot;completeIntervalWinTitles&quot;);</span>
@@ -298,6 +316,7 @@
     <span class="doccomment">/// Get `OVROverlayTransform` of a specified overlay.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `transformInfo`.</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">GetOverlayTransform</span>)]</span>
     <span class="comment">// TODO: check accordingly to reference.</span>
     <span class="comment">// reference: window.GetOverlayTransform(String(uid), &quot;ovrtWinDetailed&quot;);</span>
@@ -324,6 +343,7 @@
     <span class="doccomment">/// (Refer to Unity documentation &#39;Bounds&#39; section).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `bounds`.</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">GetOverlayBounds</span>)]</span>
     <span class="comment">// TODO: check accordingly to reference.</span>
     <span class="comment">// reference: window.GetOverlayBounds(uid, callback);</span>
@@ -333,6 +353,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `curls`.</span>
     <span class="doccomment">/// (Returns 0 for all values if user is in Simulator Mode).</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">GetFingerCurls</span>)]</span>
     <span class="comment">// TODO: check accordingly to reference.</span>
     <span class="comment">// reference: window.GetFingerCurls(&quot;completeFingerCurls&quot;);</span>
@@ -371,11 +392,20 @@
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">SetOverlaySetting</span>)]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_overlay_setting_bool</span>(<span class="ident">uid</span>: <span class="ident">i32</span>, <span class="ident">setting</span>: <span class="ident">i32</span>, <span class="ident">new_value</span>: <span class="ident">bool</span>);
 
+    <span class="comment">// /// Close the specified overlay.</span>
+    <span class="comment">// #[wasm_bindgen(js_namespace = window, js_name = CloseOverlay)]</span>
+    <span class="comment">// // TODO: check accordingly to reference.</span>
+    <span class="comment">// // reference: window.CloseOverlay(uid);</span>
+    <span class="comment">// // https://github.com/swfsql/ovrt-sys/issues/6</span>
+    <span class="comment">// pub(crate) fn close_overlay(uid: i32);</span>
+
     <span class="doccomment">/// Close the specified overlay.</span>
     <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_namespace</span> <span class="op">=</span> <span class="ident">window</span>, <span class="ident">js_name</span> <span class="op">=</span> <span class="ident">CloseOverlay</span>)]</span>
     <span class="comment">// TODO: check accordingly to reference.</span>
     <span class="comment">// reference: window.CloseOverlay(uid);</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">close_overlay</span>(<span class="ident">uid</span>: <span class="ident">i32</span>);
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/6</span>
+    <span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">close_overlay_str</span>(<span class="ident">uid</span>: <span class="ident">String</span>);
 
     <span class="doccomment">/// Send device position/rotation data to the calling overlay.</span>
     <span class="doccomment">/// (Refer to &#39;Events&#39; below).</span>

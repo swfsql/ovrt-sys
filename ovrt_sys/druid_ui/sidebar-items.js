@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["global_event_sink",""],["run",""]],"mod":[["app_data_derived_lenses",""],["cmd",""]],"struct":[["AppData",""],["Delegate",""]]});
+initSidebarItems({"enum":[["Overlay",""]],"fn":[["global_event_sink",""],["run",""]],"mod":[["app_data_derived_lenses",""],["cmd",""]],"struct":[["AppData",""],["Delegate",""]]});

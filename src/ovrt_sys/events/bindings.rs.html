@@ -69,6 +69,8 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Raw bindings into the javascript API.</span>
 <span class="doccomment">//!</span>
@@ -81,6 +83,7 @@
 
 <span class="doccomment">/// Sends HMD and left/right controller position and rotation, also shows the active controller.</span>
 <span class="doccomment">/// (Needs to be enabled per overlay, refer to API above).</span>
+<span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">DevicePositionUpdate</span>)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function DevicePositionUpdate(deviceInfo) {</span>
@@ -125,6 +128,7 @@
 
 <span class="doccomment">/// Called when an overlay is moved or its size changes.</span>
 <span class="doccomment">/// (Needs to be enabled per overlay, refer to API above).</span>
+<span class="comment">// https://github.com/swfsql/ovrt-sys/issues/2</span>
 <span class="attribute">#[<span class="ident">wasm_bindgen</span>(<span class="ident">js_name</span> <span class="op">=</span> <span class="ident">OverlayTransformChanged</span>)]</span>
 <span class="comment">// TODO: check accordingly to reference.</span>
 <span class="comment">// reference: function OverlayTransformChanged(updateData) {</span>
