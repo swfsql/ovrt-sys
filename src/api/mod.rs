@@ -3,6 +3,7 @@
 //! Any API call that returns a value also had an additional string optional parameter, this can be used to share data back to the callback function.
 
 pub mod bindings;
+pub mod callbacks;
 
 use super::types::{self, Uid};
 use crate::log;
@@ -13,10 +14,22 @@ use bindings as b;
 ///
 // TODO: check accordingly to reference.
 // reference: window.SpawnOverlay(JSON.stringify(transform), "ovrtWinSpawned");
-pub fn spawn_overlay(transform_info: &types::OVROverlayTransform, callback: String) -> Uid {
+pub fn spawn_overlay(transform_info: &types::OVROverlayTransform) -> Uid {
     let transform_info = serde_json::to_string(transform_info).expect("serialization failed");
     log!("transform_str:", &transform_info);
-    Uid(unsafe { b::spawn_overlay(transform_info, callback) })
+    Uid(unsafe { b::spawn_overlay(transform_info) })
+}
+
+/// Spawn a new overlay.
+///
+// TODO: check accordingly to reference.
+// reference: window.SpawnOverlay(JSON.stringify(transform), "ovrtWinSpawned");
+pub fn spawn_overlay_with_callback(transform_info: &types::OVROverlayTransform) -> Uid {
+    let transform_info = serde_json::to_string(transform_info).expect("serialization failed");
+    log!("transform_str:", &transform_info);
+    Uid(unsafe {
+        b::spawn_overlay_with_callback(transform_info, "SpawnOverlayOvrtSysCallback".into())
+    })
 }
 
 /// Set contents of an overlay.
@@ -54,8 +67,8 @@ pub fn set_contents_window(uid: Uid, type_: i32, window_handle: i32) {
 // TODO: check accordingly to reference.
 // reference: window.GetWindowTitles("completeIntervalWinTitles");
 // window.GetWindowTitles("ovrtWinTitles");
-pub fn get_window_titles(callback: String) -> types::KeyValuePairI32String {
-    let window_titles = unsafe { b::get_window_titles(callback) };
+pub fn get_window_titles() -> types::KeyValuePairI32String {
+    let window_titles = unsafe { b::get_window_titles("GetWindowTitlesOvrtSysCallback".into()) };
     serde_json::from_str::<types::KeyValuePairI32String>(&window_titles)
         .expect("deserialization failed")
 }
@@ -66,8 +79,8 @@ pub fn get_window_titles(callback: String) -> types::KeyValuePairI32String {
 // TODO: check accordingly to reference.
 // reference: GetMonitorCount("ovrtMonitorTotal");
 // window.GetMonitorCount(callback, data);
-pub fn get_monitor_count(callback: String) -> i32 {
-    unsafe { b::get_monitor_count(callback) }
+pub fn get_monitor_count() -> i32 {
+    unsafe { b::get_monitor_count("GetMonitorCountOvrtSysCallback".into()) }
 }
 
 /// Refresh a browser page.
@@ -82,8 +95,21 @@ pub fn refresh(uid: Uid) {
 /// Returns `transformInfo`.
 // TODO: check accordingly to reference.
 // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
-pub fn get_overlay_transform(uid: Uid, callback: String) -> types::OVROverlayTransform {
-    let transform_info = unsafe { b::get_overlay_transform(uid.0, callback) };
+pub fn get_overlay_transform(uid: Uid) -> types::OVROverlayTransform {
+    let transform_info = unsafe { b::get_overlay_transform(uid.0) };
+    serde_json::from_str::<types::OVROverlayTransform>(&transform_info)
+        .expect("deserialization failed")
+}
+
+/// Get `OVROverlayTransform` of a specified overlay.
+///
+/// Returns `transformInfo`.
+// TODO: check accordingly to reference.
+// reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
+pub fn get_overlay_transform_with_callback(uid: Uid) -> types::OVROverlayTransform {
+    let transform_info = unsafe {
+        b::get_overlay_transform_with_callback(uid.0, "GetOverlayTransformOvrtSysCallback".into())
+    };
     serde_json::from_str::<types::OVROverlayTransform>(&transform_info)
         .expect("deserialization failed")
 }
@@ -94,8 +120,8 @@ pub fn get_overlay_transform(uid: Uid, callback: String) -> types::OVROverlayTra
 /// Returns `type`.
 // TODO: check accordingly to reference.
 // reference: window.GetOverlayType(uid, callback);
-pub fn get_overlay_type(uid: Uid, callback: String) -> i32 {
-    unsafe { b::get_overlay_type(uid.0, callback) }
+pub fn get_overlay_type(uid: Uid) -> i32 {
+    unsafe { b::get_overlay_type(uid.0, "GetOverlayTypeOvrtSysCallback".into()) }
 }
 
 /// Get bounds of overlay bounding box.
@@ -104,8 +130,8 @@ pub fn get_overlay_type(uid: Uid, callback: String) -> i32 {
 /// Returns `bounds`.
 // TODO: check accordingly to reference.
 // reference: window.GetOverlayBounds(uid, callback);
-pub fn get_overlay_bounds(uid: Uid, callback: String) -> types::OVROverlayBounds {
-    let bounds = unsafe { b::get_overlay_bounds(uid.0, callback) };
+pub fn get_overlay_bounds(uid: Uid) -> types::OVROverlayBounds {
+    let bounds = unsafe { b::get_overlay_bounds(uid.0, "GetOverlayBoundsOvrtSysCallback".into()) };
     serde_json::from_str::<types::OVROverlayBounds>(&bounds).expect("deserialization failed")
 }
 
@@ -115,8 +141,8 @@ pub fn get_overlay_bounds(uid: Uid, callback: String) -> types::OVROverlayBounds
 /// (Returns 0 for all values if user is in Simulator Mode).
 // TODO: check accordingly to reference.
 // reference: window.GetFingerCurls("completeFingerCurls");
-pub fn get_finger_curls(callback: String) -> types::OVRFingerCurls {
-    let curls = unsafe { b::get_finger_curls(callback) };
+pub fn get_finger_curls() -> types::OVRFingerCurls {
+    let curls = unsafe { b::get_finger_curls("GetFingerCurlsOvrtSysCallback".into()) };
     serde_json::from_str::<types::OVRFingerCurls>(&curls).expect("deserialization failed")
 }
 

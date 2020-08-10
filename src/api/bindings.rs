@@ -1,3 +1,7 @@
+//! Raw bindings into the javascript API.
+//!
+//! For using those functions, prefer `api` instead.
+
 use crate::wasm_bindgen;
 
 #[wasm_bindgen]
@@ -9,7 +13,15 @@ extern "C" {
     ///
     /// Returns an uid.
     #[wasm_bindgen(js_namespace = window, js_name = SpawnOverlay)]
-    pub(crate) fn spawn_overlay(transform_info: String, callback: String) -> i32;
+    pub(crate) fn spawn_overlay_with_callback(transform_info: String, callback: String) -> i32;
+
+    /// Spawn a new overlay.
+    ///
+    /// This is private/hidden for safety. See `spawn_overlay` for more info.
+    ///
+    /// Returns an uid.
+    #[wasm_bindgen(js_namespace = window, js_name = SpawnOverlay)]
+    pub(crate) fn spawn_overlay(transform_info: String) -> i32;
 
     /// Set contents of an overlay.
     ///
@@ -45,6 +57,16 @@ extern "C" {
     // window.GetWindowTitles("ovrtWinTitles");
     pub(crate) fn get_window_titles(callback: String) -> String;
 
+    /// Returns a list of open windows and their handles.
+    /// (If user has this option enabled).
+    ///
+    /// Returns `windowTitles`.
+    #[wasm_bindgen(js_name = GetWindowTitlesCallback)]
+    // TODO: check accordingly to reference.
+    // reference: window.GetWindowTitles("completeIntervalWinTitles");
+    // window.GetWindowTitles("ovrtWinTitles");
+    pub(crate) fn get_window_titles_callback(callback: String) -> String;
+
     /// (Used for SetContents monitorId).
     ///
     /// Returns `monitorCount` (how many monitors are connected).
@@ -66,7 +88,15 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayTransform)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
-    pub(crate) fn get_overlay_transform(uid: i32, callback: String) -> String;
+    pub(crate) fn get_overlay_transform(uid: i32) -> String;
+
+    /// Get `OVROverlayTransform` of a specified overlay.
+    ///
+    /// Returns `transformInfo`.
+    #[wasm_bindgen(js_namespace = window, js_name = GetOverlayTransform)]
+    // TODO: check accordingly to reference.
+    // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
+    pub(crate) fn get_overlay_transform_with_callback(uid: i32, callback: String) -> String;
 
     /// Get type of overlay.
     /// (Browser, window capture, desktop capture).

@@ -14,7 +14,8 @@
       function ovrt_sys_use_workaroud() {
         // workaroud to import module items
         console.trace("re-exporting event callbacks into the global scope");
-        spawn_overlay_callback = window.ovrt_sys.spawn_overlay_callback;
+
+        // events
         DevicePositionUpdate = window.ovrt_sys.DevicePositionUpdate;
         ReceiveMessage = window.ovrt_sys.ReceiveMessage;
         InteractionStateChanged = window.ovrt_sys.InteractionStateChanged;
@@ -22,11 +23,26 @@
         OverlayClosed = window.ovrt_sys.OverlayClosed;
         OverlayTransformChanged = window.ovrt_sys.OverlayTransformChanged;
         APIInit = window.ovrt_sys.APIInit;
+        // callbacks
+        SpawnOverlayOvrtSysCallback =
+          window.ovrt_sys.SpawnOverlayOvrtSysCallback;
+        GetWindowTitlesOvrtSysCallback =
+          window.ovrt_sys.GetWindowTitlesOvrtSysCallback;
+        GetMonitorCountOvrtSysCallback =
+          window.ovrt_sys.GetMonitorCountOvrtSysCallback;
+        GetOverlayTransformOvrtSysCallback =
+          window.ovrt_sys.GetOverlayTransformOvrtSysCallback;
+        GetOverlayTypeOvrtSysCallback =
+          window.ovrt_sys.GetOverlayTypeOvrtSysCallback;
+        GetOverlayBoundsOvrtSysCallback =
+          window.ovrt_sys.GetOverlayBoundsOvrtSysCallback;
+        GetFingerCurlsOvrtSysCallback =
+          window.ovrt_sys.GetFingerCurlsOvrtSysCallback;
       }
     </script>
     <script type="module">
       import init, {
-        spawn_overlay_callback,
+        // events
         DevicePositionUpdate,
         ReceiveMessage,
         InteractionStateChanged,
@@ -34,11 +50,20 @@
         OverlayClosed,
         OverlayTransformChanged,
         APIInit,
+        // callbacks
+        SpawnOverlayOvrtSysCallback,
+        GetWindowTitlesOvrtSysCallback,
+        GetMonitorCountOvrtSysCallback,
+        GetOverlayTransformOvrtSysCallback,
+        GetOverlayTypeOvrtSysCallback,
+        GetOverlayBoundsOvrtSysCallback,
+        GetFingerCurlsOvrtSysCallback,
+        //
         wasm_main,
       } from "./pkg/ovrt_sys.js";
 
       export {
-        spawn_overlay_callback,
+        // events
         DevicePositionUpdate,
         ReceiveMessage,
         InteractionStateChanged,
@@ -46,6 +71,14 @@
         OverlayClosed,
         OverlayTransformChanged,
         APIInit,
+        // callbacks
+        SpawnOverlayOvrtSysCallback,
+        GetWindowTitlesOvrtSysCallback,
+        GetMonitorCountOvrtSysCallback,
+        GetOverlayTransformOvrtSysCallback,
+        GetOverlayTypeOvrtSysCallback,
+        GetOverlayBoundsOvrtSysCallback,
+        GetFingerCurlsOvrtSysCallback,
       };
 
       async function run() {
@@ -55,7 +88,7 @@
 
         // workaroud to export module items
         window.ovrt_sys = {
-          spawn_overlay_callback: spawn_overlay_callback,
+          // events
           DevicePositionUpdate: DevicePositionUpdate,
           ReceiveMessage: ReceiveMessage,
           InteractionStateChanged: InteractionStateChanged,
@@ -63,6 +96,14 @@
           OverlayClosed: OverlayClosed,
           OverlayTransformChanged: OverlayTransformChanged,
           APIInit: APIInit,
+          // callbacks
+          SpawnOverlayOvrtSysCallback: SpawnOverlayOvrtSysCallback,
+          GetWindowTitlesOvrtSysCallback: GetWindowTitlesOvrtSysCallback,
+          GetMonitorCountOvrtSysCallback: GetMonitorCountOvrtSysCallback,
+          GetOverlayTransformOvrtSysCallback: GetOverlayTransformOvrtSysCallback,
+          GetOverlayTypeOvrtSysCallback: GetOverlayTypeOvrtSysCallback,
+          GetOverlayBoundsOvrtSysCallback: GetOverlayBoundsOvrtSysCallback,
+          GetFingerCurlsOvrtSysCallback: GetFingerCurlsOvrtSysCallback,
         };
         ovrt_sys_use_workaroud();
 

@@ -1,3 +1,7 @@
+//! Raw bindings into the javascript API.
+//!
+//! For using those functions, prefer `events` instead.
+
 use crate::{
     types::{self, Uid},
     wasm_bindgen,
