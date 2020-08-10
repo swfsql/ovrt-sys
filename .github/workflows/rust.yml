@@ -85,13 +85,14 @@ jobs:
         args: wasm-pack
     
     - name: Build Debug wasm
-    - run: wasm-pack build --target web
+      run: wasm-pack build --target web
 
     - name: Prepare Doc and Wasm deploy
-    - run: mkdir publish
-    - run: xcopy ./target/doc ./publish/doc /s /e  
-    - run: move ./pkg ./publish/pkg
-    - run: copy ./index.html ./publish
+      run: |
+        mkdir publish
+        xcopy ./target/doc ./publish/doc /s /e  
+        move ./pkg ./publish/pkg
+        copy ./index.html ./publish
 
     - name: Doc and Wasm deploy
       uses: peaceiris/actions-gh-pages@v3
