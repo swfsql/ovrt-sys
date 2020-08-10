@@ -41,6 +41,18 @@ jobs:
         path: target/doc
         key: windows-latest-stable-cargo-doc-${{ hashFiles('**/Cargo.toml') }}
 
+    - name: Cache cargo wasm build
+      uses: actions/cache@v1
+      with:
+        path: target/wasm32-unknown-unknown
+        key: windows-latest-stable-cargo-wasm32-unknown-unknown-target-${{ hashFiles('**/Cargo.toml') }}
+
+    - name: Cache wasm-pack install
+      uses: actions/cache@v1
+      with:
+        path: target/wasm
+        key: windows-latest-stable-cargo-wasm-${{ hashFiles('**/Cargo.toml') }}
+
     - name: Fmt Check
       uses: actions-rs/cargo@v1
       with:
@@ -82,7 +94,7 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: install
-        args: wasm-pack
+        args: --target-dir ./target/wasm/ wasm-pack
     
     - name: Build Debug wasm
       run: wasm-pack build --target web
@@ -90,9 +102,9 @@ jobs:
     - name: Prepare Doc and Wasm deploy
       run: |
         mkdir publish
-        xcopy ./target/doc ./publish/doc /s /e  
-        move ./pkg ./publish/pkg
-        copy ./index.html ./publish
+        xcopy .\target\doc .\publish\doc\ /s /e  
+        xcopy .\pkg .\publish\pkg\ /s /e
+        xcopy .\index.html .\publish\
 
     - name: Doc and Wasm deploy
       uses: peaceiris/actions-gh-pages@v3
