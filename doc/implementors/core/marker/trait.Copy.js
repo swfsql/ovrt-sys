@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["ovrt_sys"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a> for <a class=\"struct\" href=\"ovrt_sys/druid_ui/app_data_derived_lenses/struct.overlays.html\" title=\"struct ovrt_sys::druid_ui::app_data_derived_lenses::overlays\">overlays</a>","synthetic":false,"types":["ovrt_sys::druid_ui::app_data_derived_lenses::overlays"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
