@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["SettingValue","This is a composition of `Setting` and `Value`, used to change settings in an overlay."],["Value","Any kind of value, to be coupled with `Setting` into a `SettingValue`."]]});

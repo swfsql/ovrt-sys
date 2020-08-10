@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Value","Any kind of value, to be coupled with `WindowType` into a `WindowTypeValue`."],["WindowTypeValue","This is a composition of `WindowType` and `Value`, used to change contents of an overlay."]]});
