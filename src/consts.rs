@@ -3,7 +3,15 @@
 use super::{types, wasm_bindgen};
 #[wasm_bindgen]
 #[derive(
-    Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
+    Clone,
+    Debug,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
 )]
 #[repr(i32)]
 // TODO: check this rename from Devices
@@ -26,7 +34,15 @@ impl Default for Device {
 /// See also: `types::WindowTypeValue`.
 #[wasm_bindgen]
 #[derive(
-    Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
+    Clone,
+    Debug,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
 )]
 #[repr(i32)]
 // TODO: check this rename
@@ -44,15 +60,21 @@ impl WindowType {
         use types::window_type::{Value::*, WindowTypeValue::*};
         match (self, value) {
             (Self::WebPage, WebContents(v)) => Some(WebPage(v)),
-            (Self::DesktopCapture, I32(v)) => Some(DesktopCapture(v)),
-            (Self::WindowCapture, I32(v)) => Some(WindowCapture(v)),
+            (Self::DesktopCapture, I32(v)) => {
+                Some(DesktopCapture(v))
+            }
+            (Self::WindowCapture, I32(v)) => {
+                Some(WindowCapture(v))
+            }
             _ => None,
         }
     }
 }
 
 impl From<&types::window_type::WindowTypeValue> for WindowType {
-    fn from(valued: &types::window_type::WindowTypeValue) -> WindowType {
+    fn from(
+        valued: &types::window_type::WindowTypeValue,
+    ) -> WindowType {
         use types::window_type::WindowTypeValue::*;
         match valued {
             WebPage(_) => WindowType::WebPage,
@@ -67,7 +89,15 @@ impl From<&types::window_type::WindowTypeValue> for WindowType {
 /// See also: `types::SettingValue`.
 #[wasm_bindgen]
 #[derive(
-    Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, serde::Serialize, serde::Deserialize,
+    Clone,
+    Debug,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
 )]
 #[repr(i32)]
 // TODO: check this rename from Settings
@@ -89,7 +119,10 @@ pub enum Setting {
 }
 
 impl Setting {
-    pub fn with(&self, value: types::setting::Value) -> Option<types::setting::SettingValue> {
+    pub fn with(
+        &self,
+        value: types::setting::Value,
+    ) -> Option<types::setting::SettingValue> {
         use types::setting::{SettingValue::*, Value::*};
         match (self, value) {
             (Self::Size, F64(v)) => Some(Size(v)),
@@ -98,7 +131,9 @@ impl Setting {
             (Self::Framerate, I32(v)) => Some(Framerate(v)),
             (Self::EcoMode, Bool(v)) => Some(EcoMode(v)),
             (Self::LookHiding, Bool(v)) => Some(LookHiding(v)),
-            (Self::AttachedDevice, I32(v)) => Some(AttachedDevice(v)),
+            (Self::AttachedDevice, I32(v)) => {
+                Some(AttachedDevice(v))
+            }
             _ => None,
         }
     }

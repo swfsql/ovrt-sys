@@ -14,8 +14,10 @@ use crate::{
 // TODO: check accordingly to reference.
 // reference: function DevicePositionUpdate(deviceInfo) {
 pub fn device_position_update(device_info: String) {
-    let device_info = serde_json::from_str::<types::OVRDeviceUpdate>(&device_info)
-        .expect("failed to deserialize");
+    let device_info = serde_json::from_str::<
+        types::OVRDeviceUpdate,
+    >(&device_info)
+    .expect("failed to deserialize");
     super::device_position_update(device_info)
 }
 
@@ -60,7 +62,8 @@ pub fn overlay_closed(uid: i32) {
 // reference: function OverlayTransformChanged(updateData) {
 pub fn overlay_transform_changed(uid: i32, data: String) {
     let data =
-        serde_json::from_str::<types::OVRTransformUpdate>(&data).expect("failed to deserialize");
+        serde_json::from_str::<types::OVRTransformUpdate>(&data)
+            .expect("failed to deserialize");
     super::overlay_transform_changed(Uid(uid), data)
 }
 

@@ -4,7 +4,14 @@ use crate::{
 };
 
 /// Any kind of value, to be coupled with `WindowType` into a `WindowTypeValue`.
-#[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 pub enum Value {
     WebContents(types::OVRWebContents),
     I32(i32),
@@ -23,7 +30,14 @@ impl From<&WindowTypeValue> for Value {
 
 /// This is a composition of `WindowType` and `Value`,
 /// used to change contents of an overlay.
-#[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 pub enum WindowTypeValue {
     WebPage(types::OVRWebContents),
     DesktopCapture(i32),
@@ -32,7 +46,10 @@ pub enum WindowTypeValue {
 
 impl WindowTypeValue {
     /// Given a type kind and a value, tries to compose a `WindowTypeValue`.
-    pub fn compose(kind: consts::WindowType, value: Value) -> Option<Self> {
+    pub fn compose(
+        kind: consts::WindowType,
+        value: Value,
+    ) -> Option<Self> {
         kind.with(value)
     }
     /// Extracts the type kind and value.
@@ -46,12 +63,15 @@ impl WindowTypeValue {
     /// in a more direct manner.
     pub fn set_in_overlay(&self, uid: Uid) {
         use WindowTypeValue::*;
-        let window_type = consts::WindowType::from(self) as i32;
         unsafe {
             match self {
-                WebPage(v) => api::set_contents_website(uid, window_type, v),
-                DesktopCapture(v) => api::set_contents_desktop(uid, window_type, *v),
-                WindowCapture(v) => api::set_contents_window(uid, window_type, *v),
+                WebPage(v) => api::set_contents_website(uid, v),
+                DesktopCapture(v) => {
+                    api::set_contents_desktop(uid, *v)
+                }
+                WindowCapture(v) => {
+                    api::set_contents_window(uid, *v)
+                }
             }
         }
     }

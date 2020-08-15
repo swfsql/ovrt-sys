@@ -54,17 +54,17 @@ jobs:
         path: target/doc
         key: windows-latest-stable-cargo-doc-${{ hashFiles('**/Cargo.toml') }}
 
-    - name: Cache cargo wasm build
-      uses: actions/cache@v1
-      with:
-        path: target/wasm32-unknown-unknown
-        key: windows-latest-stable-cargo-wasm32-unknown-unknown-target-${{ hashFiles('**/Cargo.toml') }}
+    # - name: Cache cargo wasm build
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: target/wasm32-unknown-unknown
+    #     key: windows-latest-stable-cargo-wasm32-unknown-unknown-target-${{ hashFiles('**/Cargo.toml') }}
 
-    - name: Cache wasm-pack install
-      uses: actions/cache@v1
-      with:
-        path: target/wasm
-        key: windows-latest-stable-cargo-wasm-${{ hashFiles('**/Cargo.toml') }}
+    # - name: Cache wasm-pack install
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: target/wasm
+    #     key: windows-latest-stable-cargo-wasm-${{ hashFiles('**/Cargo.toml') }}
 
 #    - name: Fmt Check
 #      uses: actions-rs/cargo@v1
@@ -90,12 +90,12 @@ jobs:
 #          command: test
 #          args: --verbose
 
-    - name: Debug wasm check
-      uses: actions-rs/cargo@v1
-      with:
-        command: check
-        target: wasm32-unknown-unknown
-        override: true
+    # - name: Debug wasm check
+    #   uses: actions-rs/cargo@v1
+    #   with:
+    #     command: check
+    #     target: wasm32-unknown-unknown
+    #     override: true
 
     - name: Doc build
       uses: actions-rs/cargo@v1
@@ -103,28 +103,42 @@ jobs:
         command: doc
         args: --all --no-deps
 
-    - name: Install wasm-pack
-      uses: actions-rs/cargo@v1
-      with:
-        command: install
-        args: --target-dir ./target/wasm/ wasm-pack
+    # - name: Install wasm-pack
+    #   uses: actions-rs/cargo@v1
+    #   with:
+    #     command: install
+    #     args: --target-dir ./target/wasm/ wasm-pack
     
-    - name: Build Debug wasm
-      run: wasm-pack build --target web
+    # - name: Build Debug wasm
+    #   run: wasm-pack build --target web
 
-    - name: Prepare Doc and Wasm deploy
+    # - name: Prepare Doc and Wasm deploy
+    #   run: |
+    #     mkdir publish
+    #     mkdir publish\doc\
+    #     mkdir publish\pkg\
+    #     xcopy .\target\doc .\publish\doc\ /s /e  
+    #     xcopy .\pkg .\publish\pkg\ /s /e
+    #     xcopy .\index.html .\publish\
+    #     xcopy .\index.js .\publish\
+    #     xcopy .\index_workaround.js .\publish\
+    #     del .\publish\pkg\.gitignore
+
+    - name: Prepare Doc deploy
       run: |
         mkdir publish
         mkdir publish\doc\
-        mkdir publish\pkg\
         xcopy .\target\doc .\publish\doc\ /s /e  
-        xcopy .\pkg .\publish\pkg\ /s /e
-        xcopy .\index.html .\publish\
-        xcopy .\index.js .\publish\
-        xcopy .\index_workaround.js .\publish\
-        del .\publish\pkg\.gitignore
 
-    - name: Doc and Wasm deploy
+    # - name: Doc and Wasm deploy
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}
+    #     publish_branch: gh-pages
+    #     publish_dir: ./publish
+    #     keep_files: false
+
+    - name: Doc deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         personal_token: ${{ secrets.ACTIONS_PERSONAL_TOKEN }}

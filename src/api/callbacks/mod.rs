@@ -1,21 +1,21 @@
 pub mod bindings;
 
+use crate::cmd::{sink::submit_cmd, Callback};
 use crate::{log, types, v};
+
+pub fn submit(callback: crate::cmd::Callback) {
+    submit_cmd(crate::cmd::Command::Callback(callback))
+}
 
 // TODO: wrappers that will deal with deserialized data,
 // like how events/mod deals with events/bindings.
 
 /// Spawn a new overlay.
 ///
-/// This is private/hidden for safety. See `spawn_overlay` for more info.
-///
 /// Returns an uid.
 pub fn spawn_overlay(uid: types::Uid) {
     log!("callback spawn_overlay.", v(&uid));
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(crate::ui::cmd::FINISH_SPAWN_OVERLAY_CALLBACK, uid, None)
-        .expect("command failed to submit");
+    submit(Callback::FinishSpawnOverlay(uid));
 }
 
 /// Returns a list of open windows and their handles.
@@ -31,14 +31,7 @@ pub fn get_window_titles(window_titles: String) {
         "window_titles:",
         &window_titles
     );
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(
-            crate::ui::cmd::FINISH_GET_WINDOW_TITLES_CALLBACK,
-            window_titles,
-            None,
-        )
-        .expect("command failed to submit");
+    submit(Callback::FinishGetWindowTitles(window_titles));
 }
 
 /// (Used for SetContents monitorId).
@@ -53,14 +46,7 @@ pub fn get_monitor_count(monitor_count: usize) {
         "monitor_count:",
         v(monitor_count)
     );
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(
-            crate::ui::cmd::FINISH_GET_MONITOR_COUNT_CALLBACK,
-            monitor_count,
-            None,
-        )
-        .expect("command failed to submit");
+    submit(Callback::FinishGetMonitorCount(monitor_count));
 }
 
 /// Get `OVROverlayTransform` of a specified overlay.
@@ -68,16 +54,11 @@ pub fn get_monitor_count(monitor_count: usize) {
 /// Returns `transformInfo`.
 // TODO: check accordingly to reference.
 // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
-pub fn get_overlay_transform(transform_info: types::OVROverlayTransform) {
+pub fn get_overlay_transform(
+    transform_info: types::OVROverlayTransform,
+) {
     log!("callback get_overlay_transform.", v(&transform_info));
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(
-            crate::ui::cmd::FINISH_GET_OVERLAY_TRANSFORM_CALLBACK,
-            transform_info,
-            None,
-        )
-        .expect("command failed to submit");
+    submit(Callback::FinishGetOverlayTransform(transform_info));
 }
 
 /// Get type of overlay.
@@ -88,14 +69,7 @@ pub fn get_overlay_transform(transform_info: types::OVROverlayTransform) {
 // reference: window.GetOverlayType(uid, callback);
 pub fn get_overlay_type(type_: i32) {
     log!("callback get_overlay_type.", "type_:", type_);
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(
-            crate::ui::cmd::FINISH_GET_OVERLAY_TYPE_CALLBACK,
-            type_,
-            None,
-        )
-        .expect("command failed to submit");
+    submit(Callback::FinishGetOverlayType(type_));
 }
 
 /// Get bounds of overlay bounding box.
@@ -106,14 +80,7 @@ pub fn get_overlay_type(type_: i32) {
 // reference: window.GetOverlayBounds(uid, callback);
 pub fn get_overlay_bounds(bounds: String) {
     log!("callback get_overlay_bounds.", "bounds:", &bounds);
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(
-            crate::ui::cmd::FINISH_GET_OVERLAY_BOUNDS_CALLBACK,
-            bounds,
-            None,
-        )
-        .expect("command failed to submit");
+    submit(Callback::FinishGetOverlayBounds(bounds));
 }
 
 /// Get finger curl positions.
@@ -124,12 +91,5 @@ pub fn get_overlay_bounds(bounds: String) {
 // reference: window.GetFingerCurls("completeFingerCurls");
 pub fn get_finger_curls(curls: String) {
     log!("callback get_finger_curls.", "curls:", &curls);
-    crate::ui::global_event_sink(None)
-        .clone()
-        .submit_command(
-            crate::ui::cmd::FINISH_GET_FINGER_CURLS_CALLBACK,
-            curls,
-            None,
-        )
-        .expect("command failed to submit");
+    submit(Callback::FinishGetFingerCurls(curls));
 }

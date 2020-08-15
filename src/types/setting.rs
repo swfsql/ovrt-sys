@@ -1,7 +1,14 @@
 use crate::{api, consts, types::Uid};
 
 /// Any kind of value, to be coupled with `Setting` into a `SettingValue`.
-#[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 pub enum Value {
     F64(f64),
     I32(i32),
@@ -25,7 +32,14 @@ impl From<&SettingValue> for Value {
 
 /// This is a composition of `Setting` and `Value`,
 /// used to change settings in an overlay.
-#[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 pub enum SettingValue {
     /// (Width in meters).
     Size(f64),
@@ -39,7 +53,10 @@ pub enum SettingValue {
 
 impl SettingValue {
     /// Given a type kind and a value, tries to compose a `SettingValue`.
-    pub fn compose(kind: consts::Setting, value: Value) -> Option<Self> {
+    pub fn compose(
+        kind: consts::Setting,
+        value: Value,
+    ) -> Option<Self> {
         kind.with(value)
     }
     /// Extracts the type kind and value.
@@ -56,13 +73,29 @@ impl SettingValue {
         let setting = consts::Setting::from(self) as i32;
         unsafe {
             match self {
-                Size(v) => api::set_overlay_setting_f64(uid, setting, *v),
-                Opacity(v) => api::set_overlay_setting_f64(uid, setting, *v),
-                Curvature(v) => api::set_overlay_setting_f64(uid, setting, *v),
-                Framerate(v) => api::set_overlay_setting_i32(uid, setting, *v),
-                EcoMode(v) => api::set_overlay_setting_bool(uid, setting, *v),
-                LookHiding(v) => api::set_overlay_setting_bool(uid, setting, *v),
-                AttachedDevice(v) => api::set_overlay_setting_i32(uid, setting, *v),
+                Size(v) => api::set_overlay_setting_f64(
+                    uid, setting, *v,
+                ),
+                Opacity(v) => api::set_overlay_setting_f64(
+                    uid, setting, *v,
+                ),
+                Curvature(v) => api::set_overlay_setting_f64(
+                    uid, setting, *v,
+                ),
+                Framerate(v) => api::set_overlay_setting_i32(
+                    uid, setting, *v,
+                ),
+                EcoMode(v) => api::set_overlay_setting_bool(
+                    uid, setting, *v,
+                ),
+                LookHiding(v) => api::set_overlay_setting_bool(
+                    uid, setting, *v,
+                ),
+                AttachedDevice(v) => {
+                    api::set_overlay_setting_i32(
+                        uid, setting, *v,
+                    )
+                }
             }
         }
     }

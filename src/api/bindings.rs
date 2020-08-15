@@ -14,7 +14,10 @@ extern "C" {
     /// Returns an uid.
     // https://github.com/swfsql/ovrt-sys/issues/2
     #[wasm_bindgen(js_namespace = window, js_name = SpawnOverlay)]
-    pub(crate) fn spawn_overlay_with_callback(transform_info: String, callback: String) -> i32;
+    pub(crate) fn spawn_overlay_with_callback(
+        transform_info: String,
+        callback: String,
+    ) -> i32;
 
     /// Spawn a new overlay.
     ///
@@ -28,10 +31,13 @@ extern "C" {
     ///
     /// This is private/hidden for safety. See `types::WindowTypeValue` for more info.
     // https://github.com/swfsql/ovrt-sys/issues/2
+    // https://github.com/swfsql/ovrt-sys/issues/6
     #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
-    // TODO: check accordingly to reference.
-    // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
-    pub(crate) fn set_contents_website(uid: i32, type_: i32, contents: String);
+    pub(crate) fn set_contents_website(
+        uid: String,
+        type_: i32,
+        contents: String,
+    );
 
     /// Set contents of an overlay.
     ///
@@ -39,7 +45,12 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
     // TODO: check accordingly to reference.
     // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
-    pub(crate) fn set_contents_desktop(uid: i32, type_: i32, monitor_id: i32);
+    // https://github.com/swfsql/ovrt-sys/issues/6
+    pub(crate) fn set_contents_desktop(
+        uid: String,
+        type_: i32,
+        monitor_id: i32,
+    );
 
     /// Set contents of an overlay.
     ///
@@ -47,7 +58,12 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = SetContents)]
     // TODO: check accordingly to reference.
     // reference: window.SetContents(String(uid), Number(winData.type), normalizedContents);
-    pub(crate) fn set_contents_window(uid: i32, type_: i32, window_handle: i32);
+    // https://github.com/swfsql/ovrt-sys/issues/6
+    pub(crate) fn set_contents_window(
+        uid: String,
+        type_: i32,
+        window_handle: i32,
+    );
 
     /// Returns a list of open windows and their handles.
     /// (If user has this option enabled).
@@ -68,7 +84,9 @@ extern "C" {
     // TODO: check accordingly to reference.
     // reference: window.GetWindowTitles("completeIntervalWinTitles");
     // window.GetWindowTitles("ovrtWinTitles");
-    pub(crate) fn get_window_titles_callback(callback: String) -> String;
+    pub(crate) fn get_window_titles_callback(
+        callback: String,
+    ) -> String;
 
     /// (Used for SetContents monitorId).
     ///
@@ -100,7 +118,10 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayTransform)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
-    pub(crate) fn get_overlay_transform_with_callback(uid: i32, callback: String) -> String;
+    pub(crate) fn get_overlay_transform_with_callback(
+        uid: i32,
+        callback: String,
+    ) -> String;
 
     /// Get type of overlay.
     /// (Browser, window capture, desktop capture).
@@ -109,7 +130,10 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayType)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayType(uid, callback);
-    pub(crate) fn get_overlay_type(uid: i32, callback: String) -> i32;
+    pub(crate) fn get_overlay_type(
+        uid: i32,
+        callback: String,
+    ) -> i32;
 
     /// Get bounds of overlay bounding box.
     /// (Refer to Unity documentation 'Bounds' section).
@@ -119,7 +143,10 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = GetOverlayBounds)]
     // TODO: check accordingly to reference.
     // reference: window.GetOverlayBounds(uid, callback);
-    pub(crate) fn get_overlay_bounds(uid: i32, callback: String) -> String;
+    pub(crate) fn get_overlay_bounds(
+        uid: i32,
+        callback: String,
+    ) -> String;
 
     /// Get finger curl positions.
     ///
@@ -135,14 +162,24 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlayPosition)]
     // TODO: check accordingly to reference.
     // reference: window.SetOverlayPosition(uid, pos.x, pos.y, pos.z);
-    pub(crate) fn set_overlay_position(uid: i32, posX: f64, posY: f64, posZ: f64);
+    pub(crate) fn set_overlay_position(
+        uid: i32,
+        posX: f64,
+        posY: f64,
+        posZ: f64,
+    );
 
     /// Set rotation of an overlay.
     /// (EulerAngles).
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlayRotation)]
     // TODO: check accordingly to reference.
     // reference: window.SetOverlayRotation(uid, rot.x, rot.y, rot.z);
-    pub(crate) fn set_overlay_rotation(uid: i32, rotX: f64, rotY: f64, rotZ: f64);
+    pub(crate) fn set_overlay_rotation(
+        uid: i32,
+        rotX: f64,
+        rotY: f64,
+        rotZ: f64,
+    );
 
     /// Set overlay setting.
     ///
@@ -150,19 +187,31 @@ extern "C" {
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
     // TODO: check accordingly to reference.
     // reference: window.SetOverlaySetting(uid, setting, value);
-    pub(crate) fn set_overlay_setting_i32(uid: i32, setting: i32, new_value: i32);
+    pub(crate) fn set_overlay_setting_i32(
+        uid: i32,
+        setting: i32,
+        new_value: i32,
+    );
 
     /// Set overlay setting.
     ///
     /// This is private/hidden for safety. See `types::SettingValue` for more info.
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
-    pub(crate) fn set_overlay_setting_f64(uid: i32, setting: i32, new_value: f64);
+    pub(crate) fn set_overlay_setting_f64(
+        uid: i32,
+        setting: i32,
+        new_value: f64,
+    );
 
     /// Set overlay setting.
     ///
     /// This is private/hidden for safety. See `types::SettingValue` for more info.
     #[wasm_bindgen(js_namespace = window, js_name = SetOverlaySetting)]
-    pub(crate) fn set_overlay_setting_bool(uid: i32, setting: i32, new_value: bool);
+    pub(crate) fn set_overlay_setting_bool(
+        uid: i32,
+        setting: i32,
+        new_value: bool,
+    );
 
     // /// Close the specified overlay.
     // #[wasm_bindgen(js_namespace = window, js_name = CloseOverlay)]

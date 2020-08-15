@@ -6,13 +6,28 @@ pub mod window_type;
 pub use setting::SettingValue;
 pub use window_type::WindowTypeValue;
 
-#[cfg_attr(feature = "druid", derive(druid::Data))]
 #[derive(
-    Debug, Default, Clone, PartialOrd, Ord, PartialEq, Eq, serde::Serialize, serde::Deserialize,
+    Debug,
+    Default,
+    Clone,
+    PartialOrd,
+    Ord,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
 )]
 pub struct Uid(pub i32);
 
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "PascalCase")]
 pub struct P3 {
     /// X value.
@@ -24,12 +39,28 @@ pub struct P3 {
 }
 
 /// Position.
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase", transparent)]
 pub struct Pos(pub P3);
 
 /// Rotation (EulerAngles).
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase", transparent)]
 pub struct Rot(pub P3);
 
@@ -40,16 +71,23 @@ serde_with::with_prefix!(prefix_extents "extents");
 
 /// OVROverlayTransform.
 // #[wasm_bindgen]
-#[derive(Clone, Debug, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrOverlayTransform
 pub struct OVROverlayTransform {
     /// Position of window.
     #[serde(flatten, with = "prefix_pos")]
-    pos: Pos,
+    pub pos: Pos,
     /// rotation of window (EulerAngles).
     #[serde(flatten, with = "prefix_rot")]
-    rot: Rot,
+    pub rot: Rot,
     /// Size of window (In meters).
     pub size: f64,
     /// Opacity of window.
@@ -115,7 +153,7 @@ impl OVRWebContents {
     pub fn url(&self) -> &str {
         &self.url
     }
-    pub fn url_mut(&mut self) -> &mut str {
+    pub fn url_mut(&mut self) -> &mut String {
         &mut self.url
     }
 }
@@ -123,7 +161,15 @@ impl OVRWebContents {
 /// OVROverlayBounds.
 ///
 /// Refer to Unity documentation for 'Bounds'.
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrOverlayBounds
 pub struct OVROverlayBounds {
@@ -138,7 +184,15 @@ pub struct OVROverlayBounds {
 /// OVRFingerCurls.
 ///
 /// 0 to 1.
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrFingerCurls
 pub struct OVRFingerCurls {
@@ -155,7 +209,15 @@ pub struct OVRFingerCurls {
 }
 
 /// OVRDeviceUpdate.
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrDeviceUpdate
 pub struct OVRDeviceUpdate {
@@ -178,14 +240,22 @@ pub struct OVRDeviceUpdate {
 }
 
 /// OVRTransformUpdate.
-#[derive(Clone, Debug, Default, PartialEq, PartialOrd, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    PartialOrd,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 #[serde(rename_all = "camelCase")]
 // TODO: try renaming into OvrTransformUpdate
 pub struct OVRTransformUpdate {
     #[serde(flatten, with = "prefix_pos")]
-    pos: Pos,
+    pub pos: Pos,
     #[serde(flatten, with = "prefix_rot")]
-    rot: Rot,
+    pub rot: Rot,
     /// Overlay size.
     pub size: f64,
     /// Overlay width in pixels.

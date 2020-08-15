@@ -51,7 +51,10 @@ pub fn get_monitor_count(monitor_count: i32) {
 // TODO: check accordingly to reference.
 // reference: window.GetOverlayTransform(String(uid), "ovrtWinDetailed");
 pub fn get_overlay_transform(transform_info: String) {
-    let data = serde_json::from_str::<types::OVROverlayTransform>(&transform_info)
+    let data =
+        serde_json::from_str::<types::OVROverlayTransform>(
+            &transform_info,
+        )
         .expect("failed to deserialize");
     super::get_overlay_transform(data)
 }
