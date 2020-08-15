@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["bindings","Raw bindings into the javascript API."]]});
+initSidebarItems({"fn":[["submit_event",""],["submit_event_response",""]],"mod":[["bindings","Raw bindings into the javascript API."]]});

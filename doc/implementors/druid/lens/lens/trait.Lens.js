@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["ovrt_sys"] = [{"text":"impl Lens&lt;<a class=\"struct\" href=\"ovrt_sys/druid_ui/struct.AppData.html\" title=\"struct ovrt_sys::druid_ui::AppData\">AppData</a>, Vector&lt;<a class=\"enum\" href=\"ovrt_sys/druid_ui/enum.Overlay.html\" title=\"enum ovrt_sys::druid_ui::Overlay\">Overlay</a>&gt;&gt; for <a class=\"struct\" href=\"ovrt_sys/druid_ui/app_data_derived_lenses/struct.overlays.html\" title=\"struct ovrt_sys::druid_ui::app_data_derived_lenses::overlays\">overlays</a>","synthetic":false,"types":["ovrt_sys::druid_ui::app_data_derived_lenses::overlays"]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

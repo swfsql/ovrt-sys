@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["global_command_sink","This function has two use-cases: getting the `CommandSink` or initializing it."],["submit_cmd","Submits a new command to be forwarded to the listener, or logged."]],"struct":[["CommandSink",""]],"type":[["Listener",""]]});
